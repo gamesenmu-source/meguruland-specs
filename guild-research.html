@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>開拓ギルド「研究」仕様書 v0.3</title>
+<style>
+  :root {
+    --bg: #f6efdf;
+    --card: #fffdf6;
+    --card2: #f5e8cc;
+    --ink: #4a3220;
+    --sub: #8a6d4f;
+    --line: #e3d2ad;
+    --line-strong: #cbb27e;
+    --gold: #c8922a;
+    --gold-soft: #f0c24a;
+    --green: #2e8b57;
+    --blue: #2d73b9;
+    --red: #c14a3d;
+    --chip-bg: #fdf6e4;
+    --shadow: 0 1px 4px rgba(60, 40, 16, .08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #221a11;
+      --card: #2d2417;
+      --card2: #3a2e1d;
+      --ink: #f0e6d2;
+      --sub: #bfa683;
+      --line: #4d3f28;
+      --line-strong: #6b5a3a;
+      --gold: #e0ac48;
+      --gold-soft: #c8922a;
+      --green: #4aa876;
+      --blue: #5f9bd8;
+      --red: #d9705f;
+      --chip-bg: #382d1c;
+      --shadow: 0 1px 4px rgba(0, 0, 0, .35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #221a11; --card: #2d2417; --card2: #3a2e1d; --ink: #f0e6d2; --sub: #bfa683;
+    --line: #4d3f28; --line-strong: #6b5a3a; --gold: #e0ac48; --gold-soft: #c8922a;
+    --green: #4aa876; --blue: #5f9bd8; --red: #d9705f; --chip-bg: #382d1c;
+    --shadow: 0 1px 4px rgba(0, 0, 0, .35);
+  }
+  :root[data-theme="light"] {
+    --bg: #f6efdf; --card: #fffdf6; --card2: #f5e8cc; --ink: #4a3220; --sub: #8a6d4f;
+    --line: #e3d2ad; --line-strong: #cbb27e; --gold: #c8922a; --gold-soft: #f0c24a;
+    --green: #2e8b57; --blue: #2d73b9; --red: #c14a3d; --chip-bg: #fdf6e4;
+    --shadow: 0 1px 4px rgba(60, 40, 16, .08);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", "Meiryo", sans-serif;
+    line-height: 1.75;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  /* ===== ヘッダー ===== */
+  .doc-head { border-bottom: 3px double var(--line-strong); padding-bottom: 24px; margin-bottom: 8px; }
+  .doc-eyebrow { font-size: .78rem; letter-spacing: .18em; color: var(--gold); font-weight: 700; }
+  h1 { font-size: 1.9rem; margin: 6px 0 10px; line-height: 1.3; text-wrap: balance; }
+  .doc-lede { color: var(--sub); max-width: 40em; margin: 0; }
+  .doc-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .meta-chip {
+    font-size: .74rem; padding: 3px 12px; border-radius: 999px;
+    background: var(--chip-bg); border: 1px solid var(--line-strong); color: var(--sub);
+  }
+  .meta-chip.warn { border-color: var(--red); color: var(--red); font-weight: 700; }
+
+  /* ===== 目次 ===== */
+  .toc { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 14px 0 0; font-size: .82rem; }
+  .toc a { color: var(--sub); text-decoration: none; border-bottom: 1px dotted var(--line-strong); }
+  .toc a:hover, .toc a:focus { color: var(--gold); }
+
+  /* ===== セクション ===== */
+  section { margin-top: 52px; }
+  .sec-label { font-size: .74rem; letter-spacing: .16em; color: var(--gold); font-weight: 700; }
+  h2 { font-size: 1.35rem; margin: 4px 0 14px; line-height: 1.35; text-wrap: balance; }
+  h3 { font-size: 1.02rem; margin: 26px 0 8px; }
+  p { max-width: 42em; margin: 10px 0; }
+  .note { color: var(--sub); font-size: .85rem; max-width: 44em; }
+  strong { color: var(--ink); }
+  em { font-style: normal; font-weight: 700; color: var(--gold); }
+
+  /* ===== カード・図解 ===== */
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 680px) { .grid3, .grid2 { grid-template-columns: 1fr; } }
+
+  .pathology { border-top: 4px solid var(--red); }
+  .pathology h4, .cure h4 { margin: 0 0 6px; font-size: .92rem; }
+  .pathology p, .cure p { font-size: .84rem; margin: 0; color: var(--sub); }
+  .cure { border-top: 4px solid var(--green); }
+
+  /* 全体構造図 */
+  .org { text-align: center; }
+  .org-guild {
+    display: inline-block; background: var(--card2); border: 2px solid var(--gold);
+    border-radius: 10px; padding: 8px 34px; font-weight: 700;
+  }
+  .org-guild small { display: block; font-weight: 500; font-size: .72rem; color: var(--sub); }
+  .org-drop { width: 2px; height: 22px; background: var(--line-strong); margin: 0 auto; }
+  .org-squads { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
+  @media (max-width: 680px) { .org-squads { grid-template-columns: repeat(4, 1fr); } }
+  .org-squad {
+    background: var(--card); border: 1px solid var(--line-strong); border-radius: 8px;
+    padding: 8px 2px 6px; font-size: .8rem; font-weight: 700;
+  }
+  .org-squad small { display: block; font-weight: 500; font-size: .66rem; color: var(--sub); }
+  .org-inside { margin-top: 12px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; font-size: .78rem; }
+  .org-role { background: var(--chip-bg); border: 1px dashed var(--line-strong); border-radius: 999px; padding: 3px 14px; color: var(--sub); }
+  .org-role b { color: var(--ink); }
+
+  /* 週タイムライン */
+  .timeline { display: flex; align-items: stretch; gap: 0; margin-top: 14px; }
+  .tl-week {
+    flex: 1; background: var(--card); border: 1px solid var(--line); border-right: 0;
+    border-radius: 10px 0 0 10px; padding: 14px 16px;
+  }
+  .tl-monday {
+    width: 220px; flex-shrink: 0; background: var(--card2); border: 2px solid var(--gold);
+    border-radius: 0 10px 10px 0; padding: 14px 16px;
+  }
+  @media (max-width: 680px) {
+    .timeline { flex-direction: column; }
+    .tl-week { border-right: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; }
+    .tl-monday { width: auto; border-radius: 0 0 10px 10px; }
+  }
+  .tl-title { font-weight: 700; font-size: .9rem; margin-bottom: 6px; }
+  .tl-list { margin: 0; padding-left: 1.2em; font-size: .84rem; color: var(--sub); }
+  .tl-list li { margin: 3px 0; }
+  .step-tag {
+    display: inline-block; width: 1.5em; height: 1.5em; line-height: 1.5em; text-align: center;
+    border-radius: 50%; color: #fff; font-size: .74rem; font-weight: 700; margin-right: 6px;
+  }
+  .s1 { background: var(--gold); } .s2 { background: var(--green); } .s3 { background: var(--blue); }
+
+  /* 二つの納品レーン */
+  .lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 680px) { .lanes { grid-template-columns: 1fr; } }
+  .lane { border-radius: 10px; border: 1px solid var(--line); background: var(--card); padding: 16px 18px; }
+  .lane-food { border-top: 4px solid var(--gold); }
+  .lane-mat  { border-top: 4px solid var(--green); }
+  .lane h4 { margin: 0 0 2px; font-size: 1rem; }
+  .lane .flow { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; font-size: .85rem; }
+  .flow-box { background: var(--chip-bg); border: 1px solid var(--line); border-radius: 7px; padding: 6px 12px; }
+  .flow-arrow { text-align: center; color: var(--line-strong); font-weight: 700; line-height: 1; }
+  .lane-sub { font-size: .78rem; color: var(--sub); }
+
+  /* 集計3パネル */
+  .agg { border-radius: 10px; background: var(--card); border: 1px solid var(--line); padding: 16px 18px; margin-top: 14px; }
+  .agg-1 { border-left: 5px solid var(--gold); }
+  .agg-2 { border-left: 5px solid var(--green); }
+  .agg-3 { border-left: 5px solid var(--blue); }
+  .agg h3 { margin: 0 0 8px; }
+  .rule {
+    background: var(--card2); border-radius: 8px; padding: 10px 14px; font-size: .88rem;
+    border: 1px solid var(--line);
+  }
+  .rule b { color: var(--gold); }
+  .agg-2 .rule b { color: var(--green); }
+  .agg-3 .rule b { color: var(--blue); }
+  ul.spec { padding-left: 1.3em; font-size: .88rem; }
+  ul.spec li { margin: 5px 0; }
+
+  /* 普及の図 */
+  .diffuse { display: flex; align-items: flex-end; gap: 8px; height: 120px; margin: 14px 0 4px; }
+  .dif-bar { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; text-align: center; font-size: .68rem; color: var(--sub); }
+  .dif-fill { background: var(--green); border-radius: 4px 4px 0 0; opacity: .85; }
+  .dif-fill.low { background: var(--line-strong); }
+  .dif-fill.rise { background: var(--blue); }
+  .dif-cap { margin-top: 3px; }
+
+  /* テーブル */
+  table { border-collapse: collapse; width: 100%; font-size: .86rem; background: var(--card); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+  .tablewrap { overflow-x: auto; margin-top: 12px; border-radius: 10px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--card2); font-size: .8rem; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  .cat-chip {
+    display: inline-block; font-size: .72rem; padding: 1px 9px; border-radius: 999px;
+    border: 1px solid var(--line-strong); background: var(--chip-bg); color: var(--sub); white-space: nowrap;
+  }
+
+  /* 効果カーブ */
+  .curve { display: flex; align-items: flex-end; gap: 14px; height: 150px; padding: 0 6px; }
+  .cv { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; text-align: center; }
+  .cv-fill { background: linear-gradient(180deg, var(--gold-soft), var(--gold)); border-radius: 6px 6px 0 0; }
+  .cv-val { font-size: .8rem; font-weight: 700; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+  .cv-lv { font-size: .72rem; color: var(--sub); margin-top: 4px; }
+
+  /* 票パワー */
+  .power-max { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+  .pm {
+    flex: 1; min-width: 200px; border-radius: 10px; padding: 12px 16px; text-align: center;
+    background: var(--card); border: 1px solid var(--line);
+  }
+  .pm .n { font-size: 1.9rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .pm.prime { border-color: var(--gold); background: var(--card2); }
+  .pm .cap { font-size: .78rem; color: var(--sub); }
+
+  .openq { border-left: 5px solid var(--red); }
+  .openq ul { margin: 6px 0; }
+
+  footer { margin-top: 60px; border-top: 1px solid var(--line); padding-top: 14px; font-size: .76rem; color: var(--sub); }
+  a { color: var(--blue); }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <div class="doc-eyebrow">メグルランド 新機能仕様書</div>
+    <h1>開拓ギルド — 8つの隊と「研究」</h1>
+    <p class="doc-lede">ユーザーが運営するギルドではなく、運営が用意した固定の8隊にゆるく所属する。納品が投票になり、知識が書物になり、書物が隊の力になる。1日10〜20分の盆栽ゲーに合わせた、圧のない共同体システム。</p>
+    <div class="doc-meta">
+      <span class="meta-chip">v0.3 ドラフト</span>
+      <span class="meta-chip">2026-07-14</span>
+      <span class="meta-chip">週次サイクル(デイリーなし)</span>
+      <span class="meta-chip warn">数値はすべて仮</span>
+    </div>
+    <nav class="toc">
+      <a href="#s1">§1 ねらい</a>
+      <a href="#s2">§2 全体構造</a>
+      <a href="#s3">§3 週のリズム</a>
+      <a href="#s4">§4 二つの納品</a>
+      <a href="#s5">§5 月曜5:00の三集計</a>
+      <a href="#s6">§6 投票パワー</a>
+      <a href="#s7">§7 研究一覧</a>
+      <a href="#s8">§8 効果カーブ</a>
+      <a href="#s9">§9 所属と移籍</a>
+      <a href="#s10">§10 世界観と隊長</a>
+      <a href="#s11">§11 未決事項</a>
+    </nav>
+  </header>
+
+  <section id="s1">
+    <div class="sec-label">§1 ねらい</div>
+    <h2>ユーザーギルドの三大病理を、構造で消す</h2>
+    <div class="grid3">
+      <div class="card pathology">
+        <h4>ギルマス失踪で崩壊</h4>
+        <p>リーダーが辞めると組織ごと沈む。運営労働をユーザーに背負わせた代償。</p>
+      </div>
+      <div class="card pathology">
+        <h4>人数上限 → キックが最適解</h4>
+        <p>枠が有限だと弱い人・忙しい人を切るのが合理になり、息苦しくなる。</p>
+      </div>
+      <div class="card pathology">
+        <h4>乱立と過疎</h4>
+        <p>作り放題だと人が散り、大半のギルドが幽霊化する。</p>
+      </div>
+    </div>
+    <div class="grid3" style="margin-top:12px">
+      <div class="card cure">
+        <h4>隊長は運営製NPC</h4>
+        <p>失踪しない。裁定もしない。人格と物語だけを担当する。</p>
+      </div>
+      <div class="card cure">
+        <h4>人数無制限・キックなし</h4>
+        <p>誰も切られない。納品ゼロでも隊員のまま。恩恵はおすそ分け。</p>
+      </div>
+      <div class="card cure">
+        <h4>固定8隊のみ</h4>
+        <p>乱立しない。全員がどこかの隊にいて、どの隊も過疎に見えない。</p>
+      </div>
+    </div>
+    <p class="note">先行実証: FF14グランドカンパニー(運営製固定3社)は同型設計で10年以上この病理なしで稼働。本仕様はそこに「投票」「研究」「普及」で日常の接点と隊の個性を足したもの。</p>
+  </section>
+
+  <section id="s2">
+    <div class="sec-label">§2 全体構造</div>
+    <h2>開拓ギルドの下に、1番隊〜8番隊</h2>
+    <div class="card org">
+      <div class="org-guild">開拓ギルド<small>上部組織。少数隊への支援キャンペーンを自動発動</small></div>
+      <div class="org-drop"></div>
+      <div class="org-squads">
+        <div class="org-squad">1番隊<small>隊長NPC</small></div>
+        <div class="org-squad">2番隊<small>隊長NPC</small></div>
+        <div class="org-squad">3番隊<small>隊長NPC</small></div>
+        <div class="org-squad">4番隊<small>隊長NPC</small></div>
+        <div class="org-squad">5番隊<small>隊長NPC</small></div>
+        <div class="org-squad">6番隊<small>隊長NPC</small></div>
+        <div class="org-squad">7番隊<small>隊長NPC</small></div>
+        <div class="org-squad">8番隊<small>隊長NPC</small></div>
+      </div>
+      <div class="org-inside">
+        <span class="org-role"><b>開拓者</b> = ユーザー。任意の隊に所属・移籍可</span>
+        <span class="org-role"><b>隊長</b> = NPC。開拓者と同格の実力者。キャラ立て担当</span>
+        <span class="org-role"><b>サポーター</b> = 裏方NPC。納品された物資で研究と支援活動を行う(フレーバー)</span>
+      </div>
+    </div>
+    <p>隊の名前は<strong>番号のみ</strong>。「採掘隊」のような特化名は付けない。何に特化するかは、その隊の開拓者たちの納品と投票の歴史が決める — <em>色はユーザーが塗る</em>。</p>
+    <p>各隊は同じ<strong>14の研究</strong>(§7)を持つ。研究は「開拓者の経験と知識をサポーターが体系化し、書物にまとめることで隊全体の力になる」という世界観。</p>
+  </section>
+
+  <section id="s3">
+    <div class="sec-label">§3 週のリズム</div>
+    <h2>平日は気ままに、月曜5:00にすべてが動く</h2>
+    <p>デイリーノルマは<strong>置かない</strong>。最小単位は週。納品も選択変更も週の中でいつでもよく、締切は月曜5:00だけ。</p>
+    <div class="timeline">
+      <div class="tl-week">
+        <div class="tl-title">週のあいだ(いつでも・任意)</div>
+        <ul class="tl-list">
+          <li>食料を研究に差し入れる(行使ポイント)</li>
+          <li>資材を研究に納品する(研究進捗)</li>
+          <li>「推し研究」を選ぶ・変え放題</li>
+          <li>何もしなくても恩恵は受けられる(おすそ分け)</li>
+        </ul>
+      </div>
+      <div class="tl-monday">
+        <div class="tl-title">月曜 5:00 の集計</div>
+        <ul class="tl-list" style="list-style:none; padding-left:0">
+          <li><span class="step-tag s1">1</span>重点研究の点灯</li>
+          <li><span class="step-tag s2">2</span>研究の発表(Lv+1)</li>
+          <li><span class="step-tag s3">3</span>普及(5/8班ルール)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="s4">
+    <div class="sec-label">§4 二つの納品</div>
+    <h2>食料は「今週の力」に、資材は「永続の力」に</h2>
+    <p>納品には2系統ある。<strong>投票UIは存在しない</strong> — どの研究に納めるかが、そのまま意思表示になる。</p>
+    <div class="lanes">
+      <div class="lane lane-food">
+        <h4>食料の差し入れ <span class="lane-sub">→ 週次ボーナスを選ぶ</span></h4>
+        <div class="flow">
+          <div class="flow-box">食料アイテムを<strong>研究を選んで</strong>差し入れ(1個=1pt・仮)</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">その研究の<strong>行使ポイント</strong>タンクに貯まる(減衰なし・持ち越し)</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">月曜5:00、残高上位の研究が<strong>今週の重点研究</strong>として点灯</div>
+        </div>
+        <p class="lane-sub" style="margin-top:10px">世界観: サポーターたちの糧食。食べて動いて、その研究の実地支援に出る。<br>個人上限: <strong>週30個</strong>(仮)。</p>
+      </div>
+      <div class="lane lane-mat">
+        <h4>資材の納品 <span class="lane-sub">→ 研究レベルを育てる</span></h4>
+        <div class="flow">
+          <div class="flow-box">研究ごとに要求される<strong>資材</strong>を納品(鉱石・木材・ドロップ品…)</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box"><strong>研究進捗</strong>が進む → 満タンで<strong>発表準備完了</strong></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-box">月曜5:00、準備完了の中から1件が<strong>発表</strong>されLv+1</div>
+        </div>
+        <p class="lane-sub" style="margin-top:10px">要求量は<strong>1週では収まらない量</strong>(隊の平均アクティブ人数×2〜4週分・仮) = 数週がかりの共同事業。<br>個人上限: <strong>1研究の要求量の10%まで</strong> → 完成には最低10人の協力が必要。独占も複垢物量も構造的に不可。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="s5">
+    <div class="sec-label">§5 月曜5:00の三集計</div>
+    <h2>点灯・発表・普及 — 3つの歯車</h2>
+
+    <div class="agg agg-1">
+      <h3><span class="step-tag s1">1</span>重点研究の点灯(行使)</h3>
+      <div class="rule">研究Lv1以上 かつ 行使ポイント残高 ≥ 維持費 の研究を、<b>残高が多い順に3枠</b>点灯する。点灯した研究は<b>維持費を消費</b>し、残りは持ち越し。点灯しなかった研究のタンクはそのまま翌週へ。</div>
+      <ul class="spec">
+        <li>点灯枠: 基本 <strong>3枠</strong> → 隊レベルで拡張(隊Lv70で4枠、140で5枠・仮)</li>
+        <li>維持費: <strong>100pt + 研究Lv×10pt</strong>(仮)。強い恩恵ほど糧食が要る</li>
+        <li>点灯中の恩恵は月曜5:00〜翌月曜5:00、<strong>隊員全員に適用</strong>(納品していなくても)</li>
+        <li>順位内でも残高が維持費に満たない研究はスキップし、次点を繰り上げ</li>
+        <li>全研究が維持費未満なら、その週は点灯ゼロ(サポーターは休憩)。ただし<strong>誰か1人がひと束納めれば翌週から復活</strong> — 復帰は常に1週で完了し、ペナルティは残らない</li>
+        <li>タンク残高・維持費・現在順位は<strong>常時表示</strong>(結果の因果を隠さない)</li>
+      </ul>
+      <p class="note">選ばれなかった研究の糧食が腐らず積もる = <strong>少数派は待てば必ず勝てる</strong>。投票のヘイトが構造的に回収される。</p>
+    </div>
+
+    <div class="agg agg-2">
+      <h3><span class="step-tag s2">2</span>研究の発表(レベルアップ)</h3>
+      <div class="rule">開拓者は「推し研究」を<b>1つ</b>選んでおく(いつでも変更可)。月曜5:00、<b>発表準備完了</b>している研究のうち、推し選択者の<b>投票パワー合計が最大</b>の1件が発表され、研究Lv+1。</div>
+      <ul class="spec">
+        <li>発表は<strong>週に1件</strong>。発表された研究は進捗と個人10%カウントがリセットされ、次のLvの要求量へ</li>
+        <li>準備完了のまま選ばれなかった研究は、<strong>完了状態のまま持ち越し</strong>(翌週も候補)</li>
+        <li>同率タイは先に準備完了した研究が優先(仮)</li>
+        <li>準備完了が1件もない週は発表なし</li>
+        <li>全研究の<strong>合計Lv = 隊レベル</strong>(最大 14研究×20Lv = 280)</li>
+        <li>初期状態: 全研究<strong>Lv0スタート</strong>。各隊の歴史は「最初の発表」から始まる</li>
+      </ul>
+    </div>
+
+    <div class="agg agg-3">
+      <h3><span class="step-tag s3">3</span>普及(5/8班ルール)</h3>
+      <div class="rule">各研究について、<b>8班中5班以上が到達しているLv</b>を「普及Lv」とする。月曜5:00、普及Lv未満の班はその研究が<b>+1Lv</b>(研究ごとに判定、普及Lvに達するまで毎週)。</div>
+      <div class="card" style="margin-top:12px">
+        <div class="diffuse" aria-hidden="true">
+          <div class="dif-bar"><div class="dif-fill" style="height:78px"></div><div class="dif-cap">1番隊<br>Lv3</div></div>
+          <div class="dif-bar"><div class="dif-fill" style="height:78px"></div><div class="dif-cap">2番隊<br>Lv3</div></div>
+          <div class="dif-bar"><div class="dif-fill" style="height:104px"></div><div class="dif-cap">3番隊<br>Lv4</div></div>
+          <div class="dif-bar"><div class="dif-fill" style="height:78px"></div><div class="dif-cap">4番隊<br>Lv3</div></div>
+          <div class="dif-bar"><div class="dif-fill" style="height:78px"></div><div class="dif-cap">5番隊<br>Lv3</div></div>
+          <div class="dif-bar"><div class="dif-fill low" style="height:26px"></div><div class="dif-cap">6番隊<br>Lv1</div></div>
+          <div class="dif-bar"><div class="dif-fill rise" style="height:52px"></div><div class="dif-cap">7番隊<br>Lv1→2</div></div>
+          <div class="dif-bar"><div class="dif-fill rise" style="height:52px"></div><div class="dif-cap">8番隊<br>Lv1→2</div></div>
+        </div>
+        <p class="note" style="margin:0">例: ある研究をLv3以上にした班が5つ → 普及Lv=3。遅れている班は毎週+1ずつ、Lv3まで自動で引き上げられる。</p>
+      </div>
+      <ul class="spec">
+        <li>先行班の意味は消えない: <strong>数週〜数ヶ月早く恩恵を使える</strong> + 「この研究はうちが最初に発表した」という歴史が残る</li>
+        <li>班間の格差は<strong>構造的に有界</strong>。後発の班・新規プレイヤーが永遠に追いつけない状況が起きない</li>
+        <li>世界観: 研究は書物として世に広まり、やがて開拓者の常識になる</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s6">
+    <div class="sec-label">§6 投票パワー</div>
+    <h2>加算式。実績が主役、プライムは添え物</h2>
+    <p>投票パワーは<strong>発表の集計(§5-2)にだけ</strong>効く。行使(§5-1)は物資の量がすべて。</p>
+    <div class="tablewrap"><table>
+      <tr><th>要素</th><th>加点</th><th>備考</th></tr>
+      <tr><td>基礎</td><td class="num">1</td><td>全開拓者</td></tr>
+      <tr><td>プライム会員</td><td class="num">+2</td><td></td></tr>
+      <tr><td rowspan="3">貢献加点<br><span class="cat-chip">直近30日の納品実績・隊内ランキング</span></td><td class="num">上位50% : +2</td><td rowspan="3"><strong>非プライムは加点+3が上限</strong><br>プライムは+7まで</td></tr>
+      <tr><td class="num">上位20% : +4</td></tr>
+      <tr><td class="num">上位5% : +7</td></tr>
+    </table></div>
+    <div class="power-max">
+      <div class="pm"><div class="cap">非プライムの最大</div><div class="n">4</div><div class="cap">1 + 貢献3</div></div>
+      <div class="pm prime"><div class="cap">プライムの最大</div><div class="n">10</div><div class="cap">1 + 2 + 貢献7</div></div>
+    </div>
+    <h3>複垢対策(この設計に織り込み済みのもの)</h3>
+    <ul class="spec">
+      <li>無料の複垢は票パワー<strong>4で頭打ち</strong>。上位帯に届くには全アカウントにプライム課金が必要 = 経済的に非合理 + 規約違反として発見次第機能制限(既存運用)</li>
+      <li>資材納品は<strong>1人10%上限</strong>で物量攻めが効かない</li>
+      <li>納品リソースは低価値(食料・汎用素材)で、注ぎ込む旨味そのものが小さい</li>
+      <li>納品で得られる個人メリットは「方針への関与」と「名誉」のみ — 換金性のある報酬を直結させない</li>
+    </ul>
+  </section>
+
+  <section id="s7">
+    <div class="sec-label">§7 研究一覧</div>
+    <h2>14の研究 — タスク10 + 支援4</h2>
+    <p>タスク系はライフスキル(全10種)に1対1で対応。点灯中の効果は共通式「該当タスクの所要時間短縮」。</p>
+    <div class="tablewrap"><table>
+      <tr><th>研究</th><th>系統</th><th>点灯中の恩恵(その週)</th><th>研究資材の系統</th></tr>
+      <tr><td><strong>農学</strong></td><td><span class="cat-chip">タスク</span></td><td>農業タスク時間短縮</td><td>作物系</td></tr>
+      <tr><td><strong>採掘学</strong></td><td><span class="cat-chip">タスク</span></td><td>採掘タスク時間短縮</td><td>鉱石系</td></tr>
+      <tr><td><strong>鍛冶学</strong></td><td><span class="cat-chip">タスク</span></td><td>鍛冶タスク時間短縮</td><td>金属加工品系</td></tr>
+      <tr><td><strong>料理学</strong></td><td><span class="cat-chip">タスク</span></td><td>料理タスク時間短縮</td><td>調理器具・食器系</td></tr>
+      <tr><td><strong>釣り学</strong></td><td><span class="cat-chip">タスク</span></td><td>釣りタスク時間短縮</td><td>釣具材料系</td></tr>
+      <tr><td><strong>木工学</strong></td><td><span class="cat-chip">タスク</span></td><td>木工タスク時間短縮</td><td>木材・建材系</td></tr>
+      <tr><td><strong>錬金学</strong></td><td><span class="cat-chip">タスク</span></td><td>錬金タスク時間短縮</td><td>草花・薬材系</td></tr>
+      <tr><td><strong>裁縫学</strong></td><td><span class="cat-chip">タスク</span></td><td>裁縫タスク時間短縮</td><td>繊維・革系</td></tr>
+      <tr><td><strong>狩猟学</strong></td><td><span class="cat-chip">タスク</span></td><td>狩猟(討伐)タスク時間短縮</td><td>討伐ドロップ系</td></tr>
+      <tr><td><strong>採集学</strong></td><td><span class="cat-chip">タスク</span></td><td>採集タスク時間短縮</td><td>野生植物系</td></tr>
+      <tr><td><strong>探索学</strong></td><td><span class="cat-chip">支援</span></td><td>探索XP +2% +0.25%/Lv(Lv20で約+7%)</td><td>探索産素材・地図片系</td></tr>
+      <tr><td><strong>医学</strong></td><td><span class="cat-chip">支援</span></td><td>週初にAP回復薬を配布(Lvで個数・品質)</td><td>薬材系</td></tr>
+      <tr><td><strong>商学</strong></td><td><span class="cat-chip">支援</span></td><td>週初にSP支給 200+25×Lv(Lv20で675SP)</td><td>汎用素材</td></tr>
+      <tr><td><strong>食糧学</strong></td><td><span class="cat-chip">支援</span></td><td>週初に食材をランダム配布(Lvで品数・レア度)</td><td>生活素材系</td></tr>
+    </table></div>
+    <p class="note">拡張候補(v2以降): 遠征学(探検隊の成果+%)、軍学(小隊要請アイテムのかけら支給 — 将来の副隊長制度と接続)。<br>食糧学は「納めた食料が形を変えて隊全体に還る」おすそ分けの象徴枠。</p>
+  </section>
+
+  <section id="s8">
+    <div class="sec-label">§8 効果カーブ</div>
+    <h2>序盤の1Lvが一番おいしい、逓減型20段階</h2>
+    <p>効果×Lvの比例式は使わない。<strong>Lv1で基本値、以降1Lvごとに小さな上乗せ</strong>。</p>
+    <div class="card">
+      <div style="font-size:.84rem; color:var(--sub); margin-bottom:10px">例: タスク短縮系 = 基本 −30秒、+5秒/Lv</div>
+      <div class="curve" aria-label="レベル別の短縮効果">
+        <div class="cv"><div class="cv-val">−30秒</div><div class="cv-fill" style="height:29px"></div><div class="cv-lv">Lv1</div></div>
+        <div class="cv"><div class="cv-val">−50秒</div><div class="cv-fill" style="height:48px"></div><div class="cv-lv">Lv5</div></div>
+        <div class="cv"><div class="cv-val">−75秒</div><div class="cv-fill" style="height:72px"></div><div class="cv-lv">Lv10</div></div>
+        <div class="cv"><div class="cv-val">−100秒</div><div class="cv-fill" style="height:96px"></div><div class="cv-lv">Lv15</div></div>
+        <div class="cv"><div class="cv-val">−125秒</div><div class="cv-fill" style="height:120px"></div><div class="cv-lv">Lv20</div></div>
+      </div>
+    </div>
+    <p class="note">新しい班・新しい研究でもすぐ体感が出て、高Lvは「積み重ねの証」として緩やかに効く。維持費(§5-1)はLvに比例して上がるため、高Lv研究を点け続けるにはそれだけの糧食が要る。</p>
+  </section>
+
+  <section id="s9">
+    <div class="sec-label">§9 所属と移籍</div>
+    <h2>誰でも入れる。いつでも移れる。何も没収されない</h2>
+    <ul class="spec">
+      <li>所属: 8隊から任意選択。人数上限なし。未所属も可(恩恵なし)</li>
+      <li>移籍: クールダウン<strong>5日</strong>(仮)。透明な時間制限のみで、<strong>貢献没収などの「人質」は作らない</strong></li>
+      <li>個人の納品実績・貢献ランキングは<strong>本人に紐づき</strong>、移籍しても消えない。隊に残るのは研究Lvだけ</li>
+      <li>納品ゼロの隊員も全恩恵を受けられる。未納者が特定できる表示は<strong>置かない</strong>。名誉表示は「今月の貢献者」上位のみ</li>
+      <li>少数隊支援: アクティブ数が全隊平均を大きく下回る隊に、開拓ギルドから<strong>支援キャンペーン</strong>が自動発動(納品ポイント+50%等・週1判定)。バナーで告知し、移籍の誘い水にする</li>
+    </ul>
+  </section>
+
+  <section id="s10">
+    <div class="sec-label">§10 世界観と隊長</div>
+    <h2>隊長は戦い、サポーターは支え、開拓者は持ち寄る</h2>
+    <ul class="spec">
+      <li><strong>隊長(8人)</strong>: 開拓者と同格の実力者。キャラクター設定は別途制作。隊チャットで発言する</li>
+      <li><strong>サポーター</strong>: 各隊の裏方NPC。戦闘力は低いが、開拓者の持ち寄る知識と物資を書物にまとめ、実地支援に出る。糧食(食料納品)は彼らの活動費 — 現時点では機能を持たないフレーバー</li>
+      <li>隊長の発言は<strong>出来事駆動のみ</strong>: 発表・点灯結果・普及・隊レベル節目・週次挨拶など。頻度は週数回まで。個別ユーザーへの自由応答はしない(一方向)</li>
+      <li>台本テンプレ主体+AIは言い回しの変化付けの裏方。日次バッチ生成+事後フィルタ+停止スイッチ。<strong>「AI隊長」を売り文句にしない</strong>(建付けは「運営製の8人のキャラクター」)</li>
+    </ul>
+  </section>
+
+  <section id="s11">
+    <div class="sec-label">§11 未決事項</div>
+    <h2>これから決めること</h2>
+    <div class="card openq">
+      <ul class="spec">
+        <li>数値バランス全般(維持費・要求量・枠数・効果値・移籍CD・食料週上限 — 本書の数値はすべて仮)</li>
+        <li>新規プレイヤーの隊選択タイミング(グレード到達? チュートリアル後?)と選択UI(隊長紹介)</li>
+        <li>隊チャットの導入時期と運用(既存チャット基盤に隊チャンネル追加は技術的に容易)</li>
+        <li>研究資材の具体アイテム割当(マスタ設計時)</li>
+        <li>将来: 副隊長制度(月替わり任命・小隊要請アイテム付与・名誉)、隊対抗の祭りイベント、遠征学・軍学の追加</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    メグルランド 開拓ギルド「研究」仕様書 v0.3 — 本書の数値はすべて調整前提の仮置き。実装接続点(タスク時間・探索XP・週次配布・チャット・プライム判定)は既存システムに確認済み。
+  </footer>
+
+</div>
+
+</body>
+</html>
