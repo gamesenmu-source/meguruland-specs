@@ -230,7 +230,7 @@
     <p class="doc-lede">ユーザーが運営するギルドではなく、運営が用意した固定の8隊にゆるく所属する。納品が投票になり、知識が書物になり、書物が隊の力になる。1日10〜20分の盆栽ゲーに合わせた、圧のない共同体システム。</p>
     <div class="doc-meta">
       <span class="meta-chip">v0.3 ドラフト</span>
-      <span class="meta-chip">2026-07-14</span>
+      <span class="meta-chip">2026-07-17 改訂</span>
       <span class="meta-chip">週次サイクル(デイリーなし)</span>
       <span class="meta-chip warn">数値はすべて仮</span>
     </div>
@@ -327,11 +327,12 @@
         <div class="tl-title">月曜 5:00 の集計</div>
         <ul class="tl-list" style="list-style:none; padding-left:0">
           <li><span class="step-tag s1">1</span>重点研究の点灯</li>
-          <li><span class="step-tag s2">2</span>研究の発表(Lv+1)</li>
+          <li><span class="step-tag s2">2</span>研究の完了(Lv+1)</li>
           <li><span class="step-tag s3">3</span>普及(5/8班ルール)</li>
         </ul>
       </div>
     </div>
+    <p class="note">月曜の初回ログインでは、デイリーボーナスのモーダルに続いて所属隊の<strong>研究完了報告</strong>モーダルを表示 — 完了した研究(Lv+1)・今週の重点研究・普及をまとめて受け取る。報せ役は隊長NPC(§10)。</p>
   </section>
 
   <section id="s4">
@@ -355,9 +356,9 @@
         <div class="flow">
           <div class="flow-box">研究ごとに要求される<strong>資材</strong>を納品(鉱石・木材・ドロップ品…)</div>
           <div class="flow-arrow">↓</div>
-          <div class="flow-box"><strong>研究進捗</strong>が進む → 満タンで<strong>発表準備完了</strong></div>
+          <div class="flow-box"><strong>研究進捗</strong>が進む → 満タンで<strong>完了待ち</strong></div>
           <div class="flow-arrow">↓</div>
-          <div class="flow-box">月曜5:00、準備完了の中から1件が<strong>発表</strong>されLv+1</div>
+          <div class="flow-box">月曜5:00、完了待ちの中から1件が<strong>完了</strong>しLv+1</div>
         </div>
         <p class="lane-sub" style="margin-top:10px">要求量は<strong>1週では収まらない量</strong>(隊の平均アクティブ人数×2〜4週分・仮) = 数週がかりの共同事業。<br>個人上限: <strong>1研究の要求量の10%まで</strong> → 完成には最低10人の協力が必要。独占も複垢物量も構造的に不可。</p>
       </div>
@@ -366,7 +367,7 @@
 
   <section id="s5">
     <div class="sec-label">§5 月曜5:00の三集計</div>
-    <h2>点灯・発表・普及 — 3つの歯車</h2>
+    <h2>点灯・完了・普及 — 3つの歯車</h2>
 
     <div class="agg agg-1">
       <h3><span class="step-tag s1">1</span>重点研究の点灯(行使)</h3>
@@ -383,15 +384,15 @@
     </div>
 
     <div class="agg agg-2">
-      <h3><span class="step-tag s2">2</span>研究の発表(レベルアップ)</h3>
-      <div class="rule">開拓者は「推し研究」を<b>1つ</b>選んでおく(いつでも変更可)。月曜5:00、<b>発表準備完了</b>している研究のうち、推し選択者の<b>投票パワー合計が最大</b>の1件が発表され、研究Lv+1。</div>
+      <h3><span class="step-tag s2">2</span>研究の完了(レベルアップ)</h3>
+      <div class="rule">開拓者は「推し研究」を<b>1つ</b>選んでおく(いつでも変更可)。月曜5:00、<b>完了待ち</b>の研究のうち、推し選択者の<b>投票パワー合計が最大</b>の1件が<b>完了</b>し、研究Lv+1。</div>
       <ul class="spec">
-        <li>発表は<strong>週に1件</strong>。発表された研究は進捗と個人10%カウントがリセットされ、次のLvの要求量へ</li>
-        <li>準備完了のまま選ばれなかった研究は、<strong>完了状態のまま持ち越し</strong>(翌週も候補)</li>
-        <li>同率タイは先に準備完了した研究が優先(仮)</li>
-        <li>準備完了が1件もない週は発表なし</li>
+        <li>完了は<strong>週に1件</strong>。完了した研究は進捗と個人10%カウントがリセットされ、次のLvの要求量へ</li>
+        <li>完了待ちのまま選ばれなかった研究は、<strong>満タン状態で持ち越し</strong>(翌週も候補)</li>
+        <li>同率タイは先に完了待ちになった研究が優先(仮)</li>
+        <li>完了待ちが1件もない週は完了なし</li>
         <li>全研究の<strong>合計Lv = 隊レベル</strong>(最大 14研究×20Lv = 280)</li>
-        <li>初期状態: 全研究<strong>Lv0スタート</strong>。各隊の歴史は「最初の発表」から始まる</li>
+        <li>初期状態: 全研究<strong>Lv0スタート</strong>。各隊の歴史は「最初の完了」から始まる</li>
       </ul>
     </div>
 
@@ -412,7 +413,7 @@
         <p class="note" style="margin:0">例: ある研究をLv3以上にした班が5つ → 普及Lv=3。遅れている班は毎週+1ずつ、Lv3まで自動で引き上げられる。</p>
       </div>
       <ul class="spec">
-        <li>先行班の意味は消えない: <strong>数週〜数ヶ月早く恩恵を使える</strong> + 「この研究はうちが最初に発表した」という歴史が残る</li>
+        <li>先行班の意味は消えない: <strong>数週〜数ヶ月早く恩恵を使える</strong> + 「この研究はうちが最初に完了した」という歴史が残る</li>
         <li>班間の格差は<strong>構造的に有界</strong>。後発の班・新規プレイヤーが永遠に追いつけない状況が起きない</li>
         <li>世界観: 研究は書物として世に広まり、やがて開拓者の常識になる</li>
       </ul>
@@ -422,7 +423,7 @@
   <section id="s6">
     <div class="sec-label">§6 投票パワー</div>
     <h2>加算式。実績が主役、プライムは添え物</h2>
-    <p>投票パワーは<strong>発表の集計(§5-2)にだけ</strong>効く。行使(§5-1)は物資の量がすべて。</p>
+    <p>投票パワーは<strong>完了の集計(§5-2)にだけ</strong>効く。行使(§5-1)は物資の量がすべて。</p>
     <div class="tablewrap"><table>
       <tr><th>要素</th><th>加点</th><th>備考</th></tr>
       <tr><td>基礎</td><td class="num">1</td><td>全開拓者</td></tr>
@@ -503,7 +504,7 @@
     <ul class="spec">
       <li><strong>隊長(8人)</strong>: 開拓者と同格の実力者。キャラクター設定は別途制作。隊チャットで発言する</li>
       <li><strong>サポーター</strong>: 各隊の裏方NPC。戦闘力は低いが、開拓者の持ち寄る知識と物資を書物にまとめ、実地支援に出る。糧食(食料納品)は彼らの活動費 — 現時点では機能を持たないフレーバー</li>
-      <li>隊長の発言は<strong>出来事駆動のみ</strong>: 発表・点灯結果・普及・隊レベル節目・週次挨拶など。頻度は週数回まで。個別ユーザーへの自由応答はしない(一方向)</li>
+      <li>隊長の発言は<strong>出来事駆動のみ</strong>: 研究完了・点灯結果・普及・隊レベル節目・週次挨拶など。頻度は週数回まで。個別ユーザーへの自由応答はしない(一方向)</li>
       <li>台本テンプレ主体+AIは言い回しの変化付けの裏方。日次バッチ生成+事後フィルタ+停止スイッチ。<strong>「AI隊長」を売り文句にしない</strong>(建付けは「運営製の8人のキャラクター」)</li>
     </ul>
   </section>
