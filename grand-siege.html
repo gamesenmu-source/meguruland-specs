@@ -154,7 +154,8 @@
     <li><strong>同時に進行できるのは1件だけ</strong>。誰かの作戦が終わるまで、次の要請はできない。</li>
     <li>発動時に Push「<strong>殲滅作戦、始動！</strong>」。以後 <strong>48時間</strong> が準備期間。</li>
   </ul>
-  <div class="callout new"><span class="lbl">要請者パーティの「隊長」固定枠</span>要請者が<strong>戦闘エントリーもしていれば</strong>、要請者の入るパーティの<strong>2人目に、要請者が所属する開拓部隊の隊長(NPC)が固定加入</strong>する。要請者が<strong>どこにも所属していなければ固定枠なし</strong>(その席は空き)。</div>
+  <div class="callout new"><span class="lbl">要請者パーティの「隊長」固定枠</span>要請者が<strong>戦闘エントリーもしていれば</strong>、要請者の入るパーティの<strong>2人目に、要請者が所属する開拓部隊の隊長(NPC)が固定加入</strong>する。<br>
+  隊長は<strong>4人枠の1つを使う</strong>(そのパーティの人間は3人になる)。要請者が<strong>どこにも所属していなければ隊長は加入せず</strong>、通常どおり人間4人で組む。</div>
 </section>
 
 <section>
@@ -249,7 +250,10 @@
     シージ兵装も兵糧も<strong>素材納品が40%で頭打ち</strong>。これ以上進めたければ、まず簡易拠点の仕上げ加工を伸ばすしかない。
   </div>
 
-  <div class="callout new"><span class="lbl">シージ兵装バフは「独立枠」</span>シージ兵装の加算は、<strong>速度バフや料理バフとは別枠の独立したバフ</strong>として乗る(同種バフで打ち消し合わない)。ステータス詳細のチップ/ツールチップに<strong>「シージ兵装 +3,000」という内訳行をきちんと出す</strong>。</div>
+  <div class="callout new"><span class="lbl">上限に達したら受付を閉じる</span>上限まで埋まったゲージは<strong>納品の受付を閉じる</strong>(UI のボタンも押せなくする)。<strong>無駄な納品でptを溶かすことはない</strong>。上限が伸びればまた開く。</div>
+
+  <div class="callout new"><span class="lbl">シージ兵装バフは「独立枠」</span>シージ兵装の加算は、<strong>速度バフや料理バフとは別枠の独立したバフ</strong>として乗る(同種バフで打ち消し合わない)。ステータス詳細のチップ/ツールチップに<strong>「シージ兵装 +3,000」という内訳行をきちんと出す</strong>。<br>
+  対象は<strong>速度を含む全パラメータ</strong>。シージでは速度が大きく跳ね上がるので、<strong>通常の戦闘では届かない「素早さ優勢」も狙える</strong>。</div>
 
   <h3>戦闘エントリー</h3>
   <ul class="tight">
@@ -421,7 +425,7 @@
     <tbody>
       <tr><td>下地加工</td><td>1タスク＝<code>0.25%</code>／全体同時キュー <code>≤ (素材納品% − 下地加工%) × 4</code></td></tr>
       <tr><td>仕上げ加工</td><td>1タスク＝<code>1%</code>／全体同時キュー <code>≤ (下地加工% − 仕上げ加工%) × 1</code></td></tr>
-      <tr><td>シージ兵装バフ</td><td><code>各パラメータ += 仕上げ加工% × 100</code> (100%→各+10,000)。独立バフ枠</td></tr>
+      <tr><td>シージ兵装バフ</td><td><code>各パラメータ(速度含む) += 仕上げ加工% × 100</code> (100%→各+10,000)。独立バフ枠</td></tr>
       <tr><td>シージトラップ</td><td><code>敵ステータス係数 × (1 − 仕上げ加工%/5/100)</code> (100%→係数0.8倍)</td></tr>
       <tr><td>出撃パーティ数</td><td><code>兵糧の仕上げ加工%</code> (最大100パーティ／最大400人)</td></tr>
       <tr><td>疲労率</td><td><code>25 − 0.15 × シージポーションの仕上げ加工%</code> (0%→25%/戦、100%→10%/戦)</td></tr>
@@ -447,12 +451,7 @@
 
 <section>
   <h2><span class="n">10</span>まだ決めていないこと</h2>
-  <h3>仕様の判断が要るもの</h3>
-  <ul class="tight">
-    <li><strong>上限に達したゲージへの納品</strong> ― 受付を閉じる / 受け付けて超過分は消える / 上限が伸びたら反映される繰越、のどれか。</li>
-    <li><strong>隊長NPCの席</strong> ― 4人枠の中に入る(人間の枠が1つ減る)か、枠外の5人目か。要請者が無所属で空席になったとき次点の人を繰り上げるか。</li>
-    <li><strong>シージ兵装バフの対象</strong> ― 「全パラメータ」に速度を含めるか(含めると行動順の設計に大きく影響)。</li>
-  </ul>
+  <p class="note">仕様(ルール)はすべて確定済み。残るのは<strong>数値・マスタの調整</strong>だけで、いずれも後から変えられる作りにする。</p>
   <h3>数値・マスタ</h3>
   <ul class="tight">
     <li>各ゲージの<strong>素材納品100%に必要なpt</strong>、<strong>下地/仕上げ加工タスクのSP</strong>、要求素材の<strong>公開タイミング</strong>。</li>
