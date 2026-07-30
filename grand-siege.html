@@ -197,24 +197,14 @@
     <li>要求されるのは<strong>加工していない採取素材</strong>。種類が多くptもばらけているので、毎回ちがう顔ぶれにできる。</li>
     <li><strong>どのゲージに納品しても要求素材は同じ</strong>。プレイヤーは「同じ素材を<strong>どのゲージに入れるか</strong>」を選ぶだけ。</li>
     <li>素材のpt価値は<strong>開催時点の採取系タスクデータ</strong>から、タスク期待値ベースで算出する。</li>
-    <li><strong>採取ライフスキルごとに、pt小 / 中 / 大 の分布から1つずつ</strong>選出(採集・採掘・錬金・農業・釣り)。</li>
+    <li><strong>採取ライフスキルごとに、pt小 / 中 / 大 の分布から1つずつ</strong>選出(採集・採掘・錬金・農業)。</li>
     <li>同じ分布の中では、<strong>消化率が低い素材</strong>・<strong>ptの割に発行数が少ない素材</strong>ほど<strong>当たりやすい</strong>(余っている物が要求されやすい)。</li>
     <li>さらに<strong>採取ライフスキルごとに1つだけ「pt 1.5倍ボーナス」</strong>。これも消化率が低い物ほど当たりやすい。</li>
   </ul>
   <div class="ex"><span class="lbl">例: ある回の要求(採集スキルぶん)</span>
     <div class="calc">小: 苔 ／ 中: 蛍火草 ／ 大: 神木のかけら ＜1.5倍ボーナス＞</div>
-    この回は「神木のかけら」を納めると pt が1.5倍で計上される。他スキル(採掘・錬金・農業・釣り)にも同じように小中大＋ボーナスが1つ決まる。
+    この回は「神木のかけら」を納めると pt が1.5倍で計上される。他スキル(採掘・錬金・農業)にも同じように小中大＋ボーナスが1つ決まる。
   </div>
-
-  <h3>シージ現地釣り</h3>
-  <ul class="tight">
-    <li>作戦地で釣りができる<strong>専用タスク</strong>。それらしい魚や<strong>外道(落とし物など)</strong>が釣れる。</li>
-    <li>釣ったものは<strong>アイテムとして手に入らない</strong>。かわりに<strong>5つのゲージのどれかへ直接「素材納品」した扱い</strong>になる。</li>
-    <li>入る先はランダム。<strong>簡易拠点が進んでいないうちは簡易拠点に入りやすい</strong>。</li>
-    <li>得られるptは<strong>釣りライフスキル＋マスタリー</strong>で変わる。目安は<strong>同じスキル・マスタリーの採取タスクで得られる見込みpt ＋α</strong>、<strong>±50%ほどのブレ</strong>がある。</li>
-    <li><strong>釣果図鑑への登録はない</strong>。</li>
-  </ul>
-  <p class="note">※ 他の採取タスクは「ついでに手に入る物」も多いのに対し、釣りは活躍の場が少ないため +α を乗せている。</p>
 
   <h3>5つのゲージと効果</h3>
   <p class="note">効果は<strong>仕上げ加工ゲージ</strong>の値で決まる。</p>
@@ -444,7 +434,7 @@
   <h2><span class="n">9</span>実装メモ (開発者向け)</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.7rem">
     <div class="callout reuse" style="margin:0"><span class="lbl">流用 (sandに既存)</span>battle_engine の4v1・非同期解決(<code>resolve_due_events</code>)・デッキスナップショット・EnemyEncounter/elder_wyvern・要請(<code>RaidBoss.key_item</code>)+要請者ボーナス・admin発動・郵便/Push/宝箱(<code>box_rewards</code>)/SP台帳・既存 squad(8隊/所属/隊長)・納品ptの価値計算(<code>food_points</code>)・タスクキュー/時間短縮</div>
-    <div class="callout new" style="margin:0"><span class="lbl">新規に作る</span>① 100体×100パーティのマッチ制御・再編・疲労・敵HP引継ぎ ② 全エントラントのパーティ編成 ③ 5ゲージ×3フェーズ(納品/下地/仕上げ)と全体キュー枠 ④ 素材の自動選定(pt分布×消化率で抽選・1.5倍ボーナス) ⑤ シージ現地釣りタスク ⑥ シージ兵装の独立バフ枠+内訳表示 ⑦ シージトラップの敵係数デバフ ⑧ 4トラック報酬(戦闘/納品/下地/仕上げ) ⑨ 結果の地形マップ演出 ⑩ 作戦書のショップ販売(メグ・2週1個)</div>
+    <div class="callout new" style="margin:0"><span class="lbl">新規に作る</span>① 100体×100パーティのマッチ制御・再編・疲労・敵HP引継ぎ ② 全エントラントのパーティ編成 ③ 5ゲージ×3フェーズ(納品/下地/仕上げ)と全体キュー枠 ④ 素材の自動選定(pt分布×消化率で抽選・1.5倍ボーナス) ⑤ シージ兵装の独立バフ枠+内訳表示 ⑥ シージトラップの敵係数デバフ ⑦ 4トラック報酬(戦闘/納品/下地/仕上げ) ⑧ 結果の地形マップ演出 ⑨ 作戦書のショップ販売(メグ・2週1個)</div>
   </div>
   <p style="margin-top:.8rem">feature: <code>game/features/siege/</code> ／ migration 次番号 <code>0432</code>〜 ／ 定数 <code>GAME_SIEGE_*</code>(<code>config/settings/base.py</code>) ／ 開拓部隊は既存 <code>squad.Squad</code> を FK 流用(新規 Squad は作らない=名前衝突回避) ／ シージ兵装バフは<strong>1関数+共有コンポーネント</strong>で内訳表示を一元化 ／ 同時1件の制約は発動APIで行ロック。</p>
 </section>
@@ -456,7 +446,6 @@
   <ul class="tight">
     <li>各ゲージの<strong>素材納品100%に必要なpt</strong>、<strong>下地/仕上げ加工タスクのSP</strong>、要求素材の<strong>公開タイミング</strong>。</li>
     <li>pt小/中/大の<strong>分布の切り方</strong>、消化率・発行数から<strong>抽選確率を出す式</strong>。</li>
-    <li>シージ現地釣りの<strong>+αの大きさ</strong>、ゲージ振り分けの<strong>抽選重み</strong>(簡易拠点を優先する度合い)。</li>
     <li>脅威の種類ごとの<strong>各トラックの報酬最大値</strong>、<strong>納品pt→SPの換算レート</strong>。</li>
     <li>敵の<strong>基準ステータス</strong>(Lv100の実数値)、作戦書の<strong>メグ単価</strong>と「2週」の起算、端数処理(SPは切り捨て等)。</li>
   </ul>
