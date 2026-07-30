@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>グランシージ 仕様説明</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <style>
@@ -16,7 +19,9 @@
     --enemy:#b0453a; --ally:#2f6aa6;
     --p1:#8a6733; --p2:#a97a2e; --p3:#c98a37;
     --radius:10px; --maxw:960px;
-    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    /* Windows の游ゴシック Regular はかすれて見えるため、Noto Sans JP を正とし
+       フォールバックも Yu Gothic Medium → Meiryo の順で太さを確保する */
+    --sans:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic Medium","Yu Gothic",Meiryo,sans-serif;
     --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
   }
   @media (prefers-color-scheme:dark){:root{
