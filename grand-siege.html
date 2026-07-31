@@ -141,13 +141,13 @@
   <div class="flow">
     <div class="step"><div class="k">発動</div><div class="t">作戦を始める</div><div class="d">1人が「グランシージ作戦書」を使用。その人が要請者</div></div>
     <div class="arrow">→</div>
-    <div class="step"><div class="k">48時間</div><div class="t">準備する</div><div class="d">素材納品 → 下地加工 → 仕上げ加工 でゲージを伸ばす／戦闘エントリー</div></div>
+    <div class="step"><div class="k">48時間</div><div class="t">準備する</div><div class="d">採取 → 下地加工 → 仕上げ加工 の専用タスクでゲージを伸ばす／戦闘エントリー</div></div>
     <div class="arrow">→</div>
     <div class="step"><div class="k">自動</div><div class="t">掃討する</div><div class="d">パーティ編成 → 100体へ順次進撃 → 巡を重ねる</div></div>
     <div class="arrow">→</div>
     <div class="step"><div class="k">結果</div><div class="t">戦果を見る</div><div class="d">地形マップ演出 → 達成度 → 報酬は郵便で</div></div>
   </div>
-  <div class="callout new"><span class="lbl">この作戦の主役は「準備」</span>戦闘に出なくても、素材を納めたり加工を回すだけで参加できる(報酬もそちらが厚い)。逆に戦闘だけの参加もOK。<strong>どれをやってもよいし、全部やってもよい</strong>。準備が戦況そのものを底上げするので、強い人だけが得をする構造になりにくい。</div>
+  <div class="callout new"><span class="lbl">この作戦の主役は「準備」</span>戦闘に出なくても、採取や加工のタスクを回すだけで参加できる(報酬もそちらが厚い)。逆に戦闘だけの参加もOK。<strong>どれをやってもよいし、全部やってもよい</strong>。準備が戦況そのものを底上げするので、強い人だけが得をする構造になりにくい。</div>
 </section>
 
 <section>
@@ -165,51 +165,56 @@
 
 <section>
   <h2><span class="n">2</span>準備 ― 3つのフェーズでゲージを伸ばす</h2>
-  <p>戦況を決めるゲージは<strong>5種類</strong>。それぞれが<strong>素材納品 → 下地加工 → 仕上げ加工</strong> の<strong>3フェーズ</strong>を持ち、前のフェーズが進んだ分だけ次が進める(五月雨式)。</p>
+  <p>戦況を決める強化項目は<strong>5種類</strong>。それぞれが<strong>採取 → 下地加工 → 仕上げ加工</strong> の<strong>3フェーズ</strong>を持ち、前のフェーズが進んだ分だけ次が進める(五月雨式)。
+  <strong>素材アイテムの納品はない</strong>。3フェーズとも<strong>シージ専用タスク</strong>を回して pt を積む(素材を消費せず、アイテムも生まれない)。</p>
 
   <div class="tw"><table>
-    <thead><tr><th>フェーズ</th><th>やること</th><th>条件</th><th>進める量</th><th>同時にできる数(全体)</th></tr></thead>
+    <thead><tr><th>フェーズ</th><th>担当スキル(スキル別ゲージ5本)</th><th>条件</th><th>マスタリーpt倍率</th></tr></thead>
     <tbody>
-      <tr><td><strong>① 素材納品</strong></td><td>採取素材を納める</td><td>なし</td><td>納品ptに応じて</td><td>制限なし</td></tr>
-      <tr><td><strong>② 下地加工</strong></td><td>下地加工タスク(30分)</td><td><strong>マスタリー不要</strong></td><td><strong>1タスクで 0.25%</strong></td><td>素材納品との差 <strong>1%につき4タスク</strong></td></tr>
-      <tr><td><strong>③ 仕上げ加工</strong></td><td>仕上げ加工タスク(30分)</td><td><strong>加工マスタリー1以上</strong></td><td><strong>1タスクで 1%</strong></td><td>下地加工との差 <strong>1%につき1タスク</strong></td></tr>
+      <tr><td><strong>① 採取</strong></td><td>農業 / 採掘 / 釣り / 狩猟 / 採集</td><td>なし</td><td><strong>あり</strong></td></tr>
+      <tr><td><strong>② 下地加工</strong></td><td>鍛冶 / 料理 / 木工 / 錬金 / 裁縫</td><td><strong>マスタリー不要</strong></td><td><strong>なし</strong></td></tr>
+      <tr><td><strong>③ 仕上げ加工</strong></td><td>鍛冶 / 料理 / 木工 / 錬金 / 裁縫</td><td><strong>加工マスタリー1以上</strong></td><td><strong>あり</strong></td></tr>
     </tbody>
   </table></div>
 
-  <div class="callout new"><span class="lbl">効果を決めるのは「仕上げ加工」</span>戦況に効くのは<strong>仕上げ加工ゲージ</strong>だけ。素材が届いただけ・下地ができただけでは戦況は動かない。<strong>集める人・下ごしらえする人・仕上げる人、全員そろって前に進む</strong>。</div>
+  <div class="callout new"><span class="lbl">スキル別ゲージ ― 一番低いところが全体を決める</span>各フェーズは<strong>担当ライフスキル5種それぞれのゲージ</strong>を持つ(強化項目5 × フェーズ3 × スキル5 ＝ <strong>75本</strong>)。
+  フェーズの進捗%は<strong>5本のうち一番低いゲージの値</strong>。1つのスキルだけ猛烈に進めても、他のスキルが置いていかれると全体は進まない ― <strong>いろんな職人が全員必要</strong>。</div>
 
-  <div class="ex"><span class="lbl">例: あるゲージの進み方</span>
+  <h3>ptの稼ぎ方 ― タスク1回ごと</h3>
+  <ul class="tight">
+    <li>基本 <strong>100pt ＋ ボーナス抽選</strong>。ボーナスは <code>0 〜 該当ライフスキルLv ÷ 10</code> の範囲で、<strong>低い値ほど出やすい</strong>重み付き抽選(上振れはレア。等倍ではない)。</li>
+    <li><strong>マスタリーを持っていれば pt に倍率</strong>(採取・仕上げ加工のみ。下地加工は倍率なし): 星1＝<strong>×1.2</strong> ／ 星2＝<strong>×1.5</strong> ／ 星3＝<strong>×2.0</strong>。</li>
+    <li>所要<strong>30分</strong>(各種の時間短縮効果はそのまま効く)。加工タスクは<strong>1人1つ</strong>しかキューに入れられない(下地・仕上げ合わせて1つ)。</li>
+  </ul>
+  <div class="ex"><span class="lbl">例: 採掘Lv800・マスタリー星2で採取タスク1回</span>
+    <div class="calc">ボーナス上限 ＝ 800÷10 ＝ 80pt → 抽選で 22pt(低め寄り)</div>
+    <div class="calc">(100 + 22) × 1.5 ＝ <strong>183pt</strong> を採掘ゲージへ</div>
+  </div>
+
+  <div class="callout new"><span class="lbl">ptは「完了した時点の成果」― 受け取りはSPとEXPだけ</span>ptは<strong>タスクが完了した時点の成果として全体累計に入る</strong>(受け取り前でも反映される。サーバー負荷をみて、まとめ集計で本人の受け取りまでに反映)。<br>
+  本人がタスクを受け取るときにもらうのは <strong>SP とライフスキルEXP のみ</strong>。受け取りでptが増えることはない。</div>
+
+  <div class="callout new"><span class="lbl">効果を決めるのは「仕上げ加工」</span>戦況に効くのは<strong>仕上げ加工ゲージ</strong>だけ(仕上げ5本の一番低い値)。採取しただけ・下地ができただけでは戦況は動かない。<strong>集める人・下ごしらえする人・仕上げる人、全員そろって前に進む</strong>。</div>
+
+  <div class="ex"><span class="lbl">例: ある強化項目の進み方</span>
     <div class="stack">
       <div class="row"><span class="nm">シージ兵装</span><span class="bar">
         <span class="f1" style="width:70%"></span><span class="f2" style="width:45%"></span><span class="f3" style="width:30%"></span>
-      </span><span class="v">納70 / 下45 / 仕30</span></div>
+      </span><span class="v">採70 / 下45 / 仕30</span></div>
     </div>
-    <div class="lgd"><span><i style="background:var(--p1)"></i>素材納品 70%</span><span><i style="background:var(--p2)"></i>下地加工 45%</span><span><i style="background:var(--p3)"></i>仕上げ加工 30%</span></div>
-    効果は<strong>仕上げ加工の30%</strong>ぶん(＝各パラメータ +3,000)。<br>
-    いま全体で同時にキューできるのは 下地加工 <code>(70−45)×4 ＝ 100タスク</code>／仕上げ加工 <code>(45−30)×1 ＝ 15タスク</code>。
+    <div class="lgd"><span><i style="background:var(--p1)"></i>採取 70%</span><span><i style="background:var(--p2)"></i>下地加工 45%</span><span><i style="background:var(--p3)"></i>仕上げ加工 30%</span></div>
+    ％はそれぞれ「スキル別5本のうち一番低い値」。効果は<strong>仕上げ加工の30%</strong>ぶん(＝各パラメータ +3,000)。<br>
+    下地加工の各ゲージは<strong>採取45%…ではなく採取70%(min適用後)まで</strong>、仕上げ加工の各ゲージは<strong>下地45%まで</strong>しか進められない。上限に達しているタスクは受注できない(受注時に判定するので、ptが無駄になることはない)。
   </div>
 
-  <h3>加工タスクの共通ルール</h3>
+  <h3>要求pt ― 発動のたびに自動で設定</h3>
   <ul class="tight">
-    <li>所要<strong>30分</strong>(各種の時間短縮効果はそのまま効く)。<strong>素材を消費せず、加工品も手に入らない</strong>。</li>
-    <li><strong>1人1つ</strong>しかキューに入れられない(下地・仕上げ合わせて1つ)。</li>
-    <li>ゲージは<strong>受け取り前でも、タスクが完了した時点で進む</strong>。受け取りは個人のSPを反映するだけ。</li>
-    <li>もらえるSPは<strong>仕上げ加工のほうが多い</strong>(同じ30分でも、条件が厳しく1タスクの進みが大きいため)。</li>
+    <li>発動時点の<strong>直近7日間のアクティブユーザー数 N</strong> を算出。</li>
+    <li><strong>N÷2 人がこの準備(全項目・全フェーズ)に48時間タスクを充てたら、全体がちょうど100%達成</strong>になる pt を設定し、項目×フェーズ×スキル別に配分する。</li>
+    <li>1人あたりの見込みptは、<strong>そのアクティブユーザーのライフスキルLvをスキルごとに集計した中央値</strong>で見積もる(48時間 ＝ 30分タスク×96回換算)。</li>
+    <li><strong>下地加工・仕上げ加工の要求ptは採取の半分</strong>(採取:下地:仕上げ ＝ 2:1:1)。</li>
   </ul>
-
-  <h3>納品する素材 ― 採取素材を、開催ごとに指定</h3>
-  <ul class="tight">
-    <li>要求されるのは<strong>加工していない採取素材</strong>。種類が多くptもばらけているので、毎回ちがう顔ぶれにできる。</li>
-    <li><strong>どのゲージに納品しても要求素材は同じ</strong>。プレイヤーは「同じ素材を<strong>どのゲージに入れるか</strong>」を選ぶだけ。</li>
-    <li>素材のpt価値は<strong>開催時点の採取系タスクデータ</strong>から、タスク期待値ベースで算出する。</li>
-    <li><strong>採取ライフスキルごとに、pt小 / 中 / 大 の分布から1つずつ</strong>選出(採集・採掘・錬金・農業・釣り)。</li>
-    <li>同じ分布の中では、<strong>消化率が低い素材</strong>・<strong>ptの割に発行数が少ない素材</strong>ほど<strong>当たりやすい</strong>(余っている物が要求されやすい)。</li>
-    <li>さらに<strong>採取ライフスキルごとに1つだけ「pt 1.5倍ボーナス」</strong>。これも消化率が低い物ほど当たりやすい。</li>
-  </ul>
-  <div class="ex"><span class="lbl">例: ある回の要求(採集スキルぶん)</span>
-    <div class="calc">小: 苔 ／ 中: 蛍火草 ／ 大: 神木のかけら ＜1.5倍ボーナス＞</div>
-    この回は「神木のかけら」を納めると pt が1.5倍で計上される。他スキル(採掘・錬金・農業・釣り)にも同じように小中大＋ボーナスが1つ決まる。
-  </div>
+  <p class="note">人が多いほど・全体のスキルが高いほど要求ptも上がる。「みんなの半分が2日間がんばれば満点」が常に基準になる。</p>
 
   <h3>5つのゲージと効果</h3>
   <p class="note">効果は<strong>仕上げ加工ゲージ</strong>の値で決まる。</p>
@@ -231,21 +236,21 @@
     <div class="stack">
       <div class="row"><span class="nm">簡易拠点</span><span class="bar">
         <span class="f1" style="width:85%"></span><span class="f2" style="width:60%"></span><span class="f3" style="width:40%"></span>
-      </span><span class="v">納85 / 下60 / 仕40</span></div>
+      </span><span class="v">採85 / 下60 / 仕40</span></div>
       <div class="row"><span class="nm">シージ兵装</span><span class="bar">
         <span class="f1" style="width:40%"></span><span class="f2" style="width:25%"></span><span class="f3" style="width:15%"></span>
         <span class="cap" style="left:40%"></span>
-      </span><span class="v">納40 / 下25 / 仕15</span></div>
+      </span><span class="v">採40 / 下25 / 仕15</span></div>
       <div class="row"><span class="nm">兵糧</span><span class="bar">
         <span class="f1" style="width:40%"></span><span class="f2" style="width:35%"></span><span class="f3" style="width:30%"></span>
         <span class="cap" style="left:40%"></span>
-      </span><span class="v">納40 / 下35 / 仕30</span></div>
+      </span><span class="v">採40 / 下35 / 仕30</span></div>
     </div>
-    <div class="lgd"><span><i style="background:var(--p1)"></i>素材納品</span><span><i style="background:var(--p2)"></i>下地加工</span><span><i style="background:var(--p3)"></i>仕上げ加工</span><span><i style="background:var(--warn)"></i>上限(簡易拠点の仕上げ40%)</span></div>
-    シージ兵装も兵糧も<strong>素材納品が40%で頭打ち</strong>。これ以上進めたければ、まず簡易拠点の仕上げ加工を伸ばすしかない。
+    <div class="lgd"><span><i style="background:var(--p1)"></i>採取</span><span><i style="background:var(--p2)"></i>下地加工</span><span><i style="background:var(--p3)"></i>仕上げ加工</span><span><i style="background:var(--warn)"></i>上限(簡易拠点の仕上げ40%)</span></div>
+    シージ兵装も兵糧も<strong>採取が40%で頭打ち</strong>。これ以上進めたければ、まず簡易拠点の仕上げ加工を伸ばすしかない。
   </div>
 
-  <div class="callout new"><span class="lbl">上限に達したら受付を閉じる</span>上限まで埋まったゲージは<strong>納品の受付を閉じる</strong>(UI のボタンも押せなくする)。<strong>無駄な納品でptを溶かすことはない</strong>。上限が伸びればまた開く。</div>
+  <div class="callout new"><span class="lbl">上限に達したらタスクの受注を閉じる</span>上限まで埋まったゲージは<strong>対応するシージ専用タスクの受注を閉じる</strong>(UI のボタンも押せなくする)。<strong>無駄なタスクでptを溶かすことはない</strong>。上限が伸びればまた開く。</div>
 
   <div class="callout new"><span class="lbl">シージ兵装バフは「独立枠」</span>シージ兵装の加算は、<strong>速度バフや料理バフとは別枠の独立したバフ</strong>として乗る(同種バフで打ち消し合わない)。ステータス詳細のチップ/ツールチップに<strong>「シージ兵装 +3,000」という内訳行をきちんと出す</strong>。<br>
   対象は<strong>速度を含む全パラメータ</strong>。シージでは速度が大きく跳ね上がるので、<strong>通常の戦闘では届かない「素早さ優勢」も狙える</strong>。</div>
@@ -329,7 +334,7 @@
       <tr><td>戦闘SP(§5)</td><td>掛かる</td></tr>
       <tr><td>各トラックの順位SP(§6)</td><td>掛かる</td></tr>
       <tr><td>宝箱(§6)</td><td>掛かる(1枠ごとの当選率)</td></tr>
-      <tr><td><strong>納品・加工でその場でもらうSP</strong></td><td><strong>掛からない</strong>(実行時に確定)</td></tr>
+      <tr><td><strong>採取・加工でその場でもらうSP</strong></td><td><strong>掛からない</strong>(実行時に確定)</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -370,14 +375,13 @@
 
 <section>
   <h2><span class="n">6</span>報酬 ― 準備トラック(3つ)</h2>
-  <div class="callout new"><span class="lbl">3つの独立したランキング</span><strong>素材納品 / 下地加工 / 仕上げ加工</strong> はそれぞれ<strong>別のランキング</strong>。得意なところで戦えばよく、掛け持ちも自由。</div>
+  <div class="callout new"><span class="lbl">3つの独立したランキング</span><strong>採取 / 下地加工 / 仕上げ加工</strong> はそれぞれ<strong>別のランキング</strong>。スコアはそのフェーズで<strong>生み出したpt</strong>(ボーナス・マスタリー倍率込み)。得意なところで戦えばよく、掛け持ちも自由。</div>
 
   <h3>もらえるもの</h3>
   <ul class="tight">
     <li><strong>① その場でもらうSP(メイン)</strong>
       <ul class="tight">
-        <li><strong>素材納品</strong>: 納品した瞬間に確定。<code>納品SP ＝ 納品pt × 固定レート</code>(達成度・順位に依存しない)。</li>
-        <li><strong>下地加工 / 仕上げ加工</strong>: タスクを受け取った時に<strong>決まったSP</strong>。<strong>仕上げ加工のほうが1タスクあたり多い</strong>。</li>
+        <li>3フェーズとも、<strong>タスクを受け取った時に決まったSP＋ライフスキルEXP</strong>(達成度・順位に依存しない)。<strong>仕上げ加工のほうが1タスクあたり多い</strong>。</li>
       </ul>
     </li>
     <li><strong>② 順位SP(おまけ)</strong> ― 3トラックそれぞれの順位で、戦闘と<strong>同じ減衰表</strong>(§5の待機行を除く4帯)。<strong>400位まで</strong>。</li>
@@ -397,7 +401,7 @@
       <tr><td>101位以下(スコアあり)</td><td colspan="4" style="text-align:center">おすそわけのみ</td></tr>
     </tbody>
   </table></div>
-  <div class="ex"><span class="lbl">例: 素材納品15位・達成度73%</span>
+  <div class="ex"><span class="lbl">例: 採取トラック15位・達成度73%</span>
     キャップは 貴重1/普通1 → <strong>合計2個の枠</strong>をそれぞれ 73% で抽選 → 平均 <strong>約1.5個</strong>。
   </div>
 </section>
@@ -418,17 +422,18 @@
   <div class="tw"><table>
     <thead><tr><th>項目</th><th>式</th></tr></thead>
     <tbody>
-      <tr><td>下地加工</td><td>1タスク＝<code>0.25%</code>／全体同時キュー <code>≤ (素材納品% − 下地加工%) × 4</code></td></tr>
-      <tr><td>仕上げ加工</td><td>1タスク＝<code>1%</code>／全体同時キュー <code>≤ (下地加工% − 仕上げ加工%) × 1</code></td></tr>
+      <tr><td>タスクpt</td><td><code>(100 + ボーナス抽選) × マスタリー倍率</code>。ボーナス＝<code>0〜Lv÷10</code>で低い値ほど出やすい／倍率は採取・仕上げのみ 星1×1.2/星2×1.5/星3×2.0</td></tr>
+      <tr><td>フェーズ進捗</td><td>スキル別5本の<strong>いちばん低いゲージ%</strong>(min適用)。ゲージ% ＝ 累計pt ÷ 要求pt</td></tr>
+      <tr><td>要求pt</td><td>7日間アクティブ<code>N÷2</code>人 × 48h(30分×96タスク) × 中央値スキルの期待pt で自動算出。<strong>下地・仕上げは採取の半分</strong>(2:1:1)</td></tr>
       <tr><td>シージ兵装バフ</td><td><code>各パラメータ(速度含む) += 仕上げ加工% × 100</code> (100%→各+10,000)。独立バフ枠</td></tr>
       <tr><td>シージトラップ</td><td><code>敵ステータス係数 × (1 − 仕上げ加工%/5/100)</code> (100%→係数0.8倍)</td></tr>
       <tr><td>出撃パーティ数</td><td><code>兵糧の仕上げ加工%</code> (最大100パーティ／最大400人)</td></tr>
       <tr><td>疲労率</td><td><code>25 − 0.15 × シージポーションの仕上げ加工%</code> (0%→25%/戦、100%→10%/戦)</td></tr>
       <tr><td>疲労の効き方</td><td><code>ステータス倍率 = 100% − 疲労率 ×(その開拓者の出撃回数−1)</code></td></tr>
-      <tr><td>ゲージ上限</td><td><code>他4ゲージの全フェーズ ≤ 簡易拠点の仕上げ加工%</code>、各ゲージ内は <code>仕上げ ≤ 下地 ≤ 素材納品</code></td></tr>
+      <tr><td>ゲージ上限</td><td><code>他4項目の全フェーズ ≤ 簡易拠点の仕上げ加工%</code>、各項目内は <code>仕上げ ≤ 下地 ≤ 採取</code>(いずれもmin適用後の%。受注時判定)</td></tr>
       <tr><td>達成度</td><td><code>撃破数 ÷ 100</code></td></tr>
       <tr><td>戦闘スコア</td><td><code>Σ (100 + 敵Lv) × (与ダメージ ÷ 敵の最大HP)</code></td></tr>
-      <tr><td>納品SP</td><td><code>納品pt × 固定レート</code> (達成度・順位に依存しない)</td></tr>
+      <tr><td>準備SP</td><td>タスク受取時の固定SP＋ライフスキルEXP (達成度・順位に依存しない。仕上げ最多)</td></tr>
       <tr><td>順位SP</td><td><code>最大値 × 達成度% × 順位保持率</code>(保持率 = 100% − 順位減衰%)</td></tr>
       <tr><td>宝箱</td><td>順位帯のキャップ個数ぶんの枠を、<strong>1枠ずつ達成度%で抽選</strong></td></tr>
     </tbody>
@@ -438,8 +443,8 @@
 <section>
   <h2><span class="n">9</span>実装メモ (開発者向け)</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.7rem">
-    <div class="callout reuse" style="margin:0"><span class="lbl">流用 (sandに既存)</span>battle_engine の4v1・非同期解決(<code>resolve_due_events</code>)・デッキスナップショット・EnemyEncounter/elder_wyvern・要請(<code>RaidBoss.key_item</code>)+要請者ボーナス・admin発動・郵便/Push/宝箱(<code>box_rewards</code>)/SP台帳・既存 squad(8隊/所属/隊長)・納品ptの価値計算(<code>food_points</code>)・タスクキュー/時間短縮</div>
-    <div class="callout new" style="margin:0"><span class="lbl">新規に作る</span>① 100体×100パーティのマッチ制御・再編・疲労・敵HP引継ぎ ② 全エントラントのパーティ編成 ③ 5ゲージ×3フェーズ(納品/下地/仕上げ)と全体キュー枠 ④ 素材の自動選定(pt分布×消化率で抽選・1.5倍ボーナス) ⑤ シージ兵装の独立バフ枠+内訳表示 ⑥ シージトラップの敵係数デバフ ⑦ 4トラック報酬(戦闘/納品/下地/仕上げ) ⑧ 結果の地形マップ演出 ⑨ 作戦書のショップ販売(メグ・2週1個)</div>
+    <div class="callout reuse" style="margin:0"><span class="lbl">流用 (sandに既存)</span>battle_engine の4v1・非同期解決(<code>resolve_due_events</code>)・デッキスナップショット・EnemyEncounter/elder_wyvern・要請(<code>RaidBoss.key_item</code>)+要請者ボーナス・admin発動・郵便/Push/宝箱(<code>box_rewards</code>)/SP台帳・既存 squad(8隊/所属/隊長)・タスクキュー/時間短縮・マスタリー(星)・ライフスキルLv/EXP</div>
+    <div class="callout new" style="margin:0"><span class="lbl">新規に作る</span>① 100体×100パーティのマッチ制御・再編・疲労・敵HP引継ぎ ② 全エントラントのパーティ編成 ③ シージ専用タスク(pt生成)と 5項目×3フェーズ×スキル別ゲージ(min適用)+順序制御 ④ 要求ptの自動算出(7日アクティブ半数×48h×中央値スキル) ⑤ pt加算の遅延集計バッチ(受取前反映・冪等) ⑥ シージ兵装の独立バフ枠+内訳表示 ⑦ シージトラップの敵係数デバフ ⑧ 4トラック報酬(戦闘/採取/下地/仕上げ) ⑨ 結果の地形マップ演出 ⑩ 作戦書のショップ販売(メグ・2週1個)</div>
   </div>
   <p style="margin-top:.8rem">feature: <code>game/features/siege/</code> ／ migration 次番号 <code>0432</code>〜 ／ 定数 <code>GAME_SIEGE_*</code>(<code>config/settings/base.py</code>) ／ 開拓部隊は既存 <code>squad.Squad</code> を FK 流用(新規 Squad は作らない=名前衝突回避) ／ シージ兵装バフは<strong>1関数+共有コンポーネント</strong>で内訳表示を一元化 ／ 同時1件の制約は発動APIで行ロック。</p>
 </section>
@@ -449,15 +454,16 @@
   <p class="note">仕様(ルール)はすべて確定済み。残るのは<strong>数値・マスタの調整</strong>だけで、いずれも後から変えられる作りにする。</p>
   <h3>数値・マスタ</h3>
   <ul class="tight">
-    <li>各ゲージの<strong>素材納品100%に必要なpt</strong>、<strong>下地/仕上げ加工タスクのSP</strong>、要求素材の<strong>公開タイミング</strong>。</li>
-    <li>pt小/中/大の<strong>分布の切り方</strong>、消化率・発行数から<strong>抽選確率を出す式</strong>。</li>
-    <li>脅威の種類ごとの<strong>各トラックの報酬最大値</strong>、<strong>納品pt→SPの換算レート</strong>。</li>
+    <li>ボーナス抽選の<strong>重み分布の式</strong>(低い値ほど出やすい形)、3フェーズの<strong>タスクSP額・ライフスキルEXP額</strong>。</li>
+    <li>要求pt算出の<strong>正確な式</strong>(中央値の取り方・ボーナス/マスタリー期待値の織り込み・アクティブ数が少ない時の下限ガード)、<strong>pt集計バッチの発火間隔</strong>。</li>
+    <li><strong>同時キュー枠の再設計</strong>(旧タスク数ベースの式は廃止。%上限方式の細目)。</li>
+    <li>脅威の種類ごとの<strong>各トラックの報酬最大値</strong>。</li>
     <li>敵の<strong>基準ステータス</strong>(Lv100の実数値)、作戦書の<strong>メグ単価</strong>と「2週」の起算、端数処理(SPは切り捨て等)。</li>
   </ul>
 </section>
 
 <div class="foot">
-  グランシージ 仕様説明 ・ 2026-07-28。数値はすべてマスタ/設定で後調整できる作りにする。実装は段階(P1骨組み+発動 → P2戦闘制御 → P3準備3フェーズ/エントリー/解決 → P4報酬 → P5フロント → P6ショップ)で、各段階に敵対バグチェック+テスト+ライブ確認を挟む。
+  グランシージ 仕様説明 ・ 2026-07-28 (準備フェーズ改定 2026-08-01)。数値はすべてマスタ/設定で後調整できる作りにする。実装は段階(P1骨組み+発動 → P2戦闘制御 → P3準備3フェーズ/エントリー/解決 → P4報酬 → P5フロント → P6ショップ)で、各段階に敵対バグチェック+テスト+ライブ確認を挟む。
 </div>
 
 </div>
