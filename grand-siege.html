@@ -120,13 +120,39 @@
   .lgd i{display:inline-block;width:.7rem;height:.7rem;border-radius:3px;margin-right:.25rem;vertical-align:-1px}
   .foot{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
   @media (max-width:560px){.flow .arrow{transform:rotate(90deg)}.stack .nm{flex-basis:5.5rem}.stack .v{flex-basis:6rem}}
+  /* ---- 冒頭スライド ---- */
+  .sl-sec{margin-top:1.4rem}
+  .slides{position:relative}
+  .sl-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.8rem;border-radius:var(--radius);scrollbar-width:none}
+  .sl-track::-webkit-scrollbar{display:none}
+  .sl-card{flex:0 0 100%;scroll-snap-align:center;background:var(--surface);border:1px solid var(--border-strong);
+    border-radius:var(--radius);padding:1.1rem 2.6rem 1.2rem;display:flex;flex-direction:column;gap:.45rem;min-height:14rem;justify-content:center}
+  .sl-tit{font-weight:700;font-size:1.08rem;text-align:center}
+  .sl-txt{margin:0;font-size:.92rem;color:var(--muted);text-align:center;max-width:36rem;align-self:center}
+  .sl-fig{display:flex;align-items:center;justify-content:center;padding:.3rem 0}
+  .sl-row{display:flex;gap:.5rem;align-items:center;justify-content:center;flex-wrap:wrap}
+  .sl-chip{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.32rem .6rem;
+    font-size:.8rem;font-weight:600;text-align:center;line-height:1.35}
+  .sl-chip small{display:block;font-weight:500;color:var(--muted);font-size:.72rem}
+  .sl-arrow{color:var(--accent-line);font-weight:700}
+  .sl-bars{display:flex;gap:3px;align-items:flex-end;height:36px}
+  .sl-bars i{display:block;width:9px;background:var(--p3);border-radius:2px 2px 0 0}
+  .sl-bars i.low{background:var(--warn)}
+  .sl-vs{font-weight:800;color:var(--enemy);font-size:1.1rem;padding:0 .3rem}
+  .sl-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:2.2rem;height:2.2rem;border-radius:50%;
+    border:1px solid var(--border-strong);background:var(--surface);color:var(--accent);font-size:1.35rem;line-height:1;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+  .sl-nav.prev{left:.45rem}.sl-nav.next{right:.45rem}
+  .sl-dots{display:flex;gap:.45rem;justify-content:center;margin-top:.6rem}
+  .sl-dots button{width:.62rem;height:.62rem;border-radius:50%;border:none;background:var(--border-strong);cursor:pointer;padding:0}
+  .sl-dots button.on{background:var(--accent)}
 </style>
 
 <div class="wrap">
 
 <header>
   <h1>グランシージ ― 広域脅威 殲滅作戦</h1>
-  <p class="lede">多人数協力型の PvE 総力戦。1人の要請者が「作戦書」で<strong>殲滅作戦を発動</strong>し、みんなで素材を集め・加工して戦力を整え、参加者を最大100パーティに編成して<strong>広域の脅威100体を一気に掃討する</strong>。攻め入る側の作戦・対戦なし・失敗なしの達成度コンテンツ。</p>
+  <p class="lede">多人数協力型の PvE 総力戦。1人の要請者が「作戦書」で<strong>殲滅作戦を発動</strong>し、みんなで採取・加工のタスクを回して戦力を整え、参加者を最大100パーティに編成して<strong>広域の脅威100体を一気に掃討する</strong>。攻め入る側の作戦・対戦なし・失敗なしの達成度コンテンツ。</p>
   <div class="meta">
     <span class="pill ok">2026-07-28</span>
     <span class="pill">準備 48時間</span>
@@ -135,6 +161,72 @@
     <span class="pill">敵100体 × 最大100パーティ</span>
   </div>
 </header>
+
+<section class="sl-sec">
+  <h2>30秒でわかるグランシージ</h2>
+  <div class="slides">
+    <button class="sl-nav prev" type="button" aria-label="前のスライド">‹</button>
+    <div class="sl-track" id="slTrack">
+      <div class="sl-card">
+        <div class="sl-tit">1人が旗を振り、全員の総力戦が始まる</div>
+        <div class="sl-fig"><div class="sl-row">
+          <span class="sl-chip">グランシージ<br>作戦書<small>ショップ(メグ)</small></span>
+          <span class="sl-arrow">→</span>
+          <span class="sl-chip">殲滅作戦、始動！<small>準備 48時間</small></span>
+          <span class="sl-arrow">→</span>
+          <span class="sl-chip">全員参加OK<small>同時に1件だけ</small></span>
+        </div></div>
+        <p class="sl-txt">誰か1人が「作戦書」を使うと発動。使った人が<strong>要請者</strong>になり、特別報酬もある。</p>
+      </div>
+      <div class="sl-card">
+        <div class="sl-tit">素材は不要。タスクを回して戦力づくり</div>
+        <div class="sl-fig"><div class="sl-row">
+          <span class="sl-chip">採取<small>農/採/釣/狩/集</small></span>
+          <span class="sl-arrow">→</span>
+          <span class="sl-chip">下地加工<small>誰でも</small></span>
+          <span class="sl-arrow">→</span>
+          <span class="sl-chip">仕上げ加工<small>マスタリー1+</small></span>
+          <span class="sl-bars" aria-hidden="true"><i style="height:30px"></i><i class="low" style="height:14px"></i><i style="height:24px"></i><i style="height:27px"></i><i style="height:20px"></i></span>
+        </div></div>
+        <p class="sl-txt">タスク1回ごとにptが貯まる(スキルLvとマスタリーで増える)。ゲージは<strong>スキル別</strong>で、<strong>一番低いところが全体の進み</strong> ― 全職人の出番。</p>
+      </div>
+      <div class="sl-card">
+        <div class="sl-tit">仕上げた分だけ、戦況がまるごと有利に</div>
+        <div class="sl-fig"><div class="sl-row">
+          <span class="sl-chip">簡易拠点<small>すべての土台</small></span>
+          <span class="sl-chip">シージ兵装<small>全ステ +1万</small></span>
+          <span class="sl-chip">シージトラップ<small>敵 −20%</small></span>
+          <span class="sl-chip">兵糧<small>出撃100隊</small></span>
+          <span class="sl-chip">ポーション<small>疲労軽減</small></span>
+        </div></div>
+        <p class="sl-txt">5つの強化項目。効くのは<strong>仕上げ加工%</strong>だけ ― 集める人・下ごしらえの人・仕上げる人、全員そろって前へ。</p>
+      </div>
+      <div class="sl-card">
+        <div class="sl-tit">敵100体 × 最大100パーティで一斉掃討</div>
+        <div class="sl-fig"><div class="sl-row">
+          <span class="sl-chip">第1パーティ<small>タンク+ヒーラー配備</small></span>
+          <span class="sl-vs">⚔</span>
+          <span class="sl-chip">Lv100<small>強い敵から順に</small></span>
+          <span class="sl-arrow">…</span>
+          <span class="sl-chip">生き残りで再編成<small>何巡でも</small></span>
+        </div></div>
+        <p class="sl-txt">戦闘力順にマッチして自動で激突。全滅しても<strong>失敗はない</strong> ― 倒した数がそのまま<strong>達成度</strong>になる。</p>
+      </div>
+      <div class="sl-card">
+        <div class="sl-tit">貢献は個人集計。得意な持ち場で報われる</div>
+        <div class="sl-fig"><div class="sl-row">
+          <span class="sl-chip">戦闘<small>SP</small></span>
+          <span class="sl-chip">採取<small>SP+宝箱</small></span>
+          <span class="sl-chip">下地加工<small>SP+宝箱</small></span>
+          <span class="sl-chip">仕上げ加工<small>SP+宝箱</small></span>
+        </div></div>
+        <p class="sl-txt">4トラック独立のランキング。その場SPは達成度に関係なく確定、順位SPと宝箱は<strong>達成度が高いほど豪華</strong>。</p>
+      </div>
+    </div>
+    <button class="sl-nav next" type="button" aria-label="次のスライド">›</button>
+  </div>
+  <div class="sl-dots" id="slDots"></div>
+</section>
 
 <section>
   <h2>ぜんたいの流れ</h2>
@@ -180,6 +272,17 @@
   <div class="callout new"><span class="lbl">スキル別ゲージ ― 一番低いところが全体を決める</span>各フェーズは<strong>担当ライフスキル5種それぞれのゲージ</strong>を持つ(強化項目5 × フェーズ3 × スキル5 ＝ <strong>75本</strong>)。
   フェーズの進捗%は<strong>5本のうち一番低いゲージの値</strong>。1つのスキルだけ猛烈に進めても、他のスキルが置いていかれると全体は進まない ― <strong>いろんな職人が全員必要</strong>。</div>
 
+  <div class="ex"><span class="lbl">例: シージ兵装の「仕上げ加工」スキル別5本</span>
+    <div class="stack">
+      <div class="row"><span class="nm">鍛冶</span><span class="bar"><span class="f3" style="width:60%"></span></span><span class="v">60%</span></div>
+      <div class="row"><span class="nm">料理</span><span class="bar"><span class="f3" style="width:35%"></span></span><span class="v"><strong>35% ← 最低</strong></span></div>
+      <div class="row"><span class="nm">木工</span><span class="bar"><span class="f3" style="width:48%"></span></span><span class="v">48%</span></div>
+      <div class="row"><span class="nm">錬金</span><span class="bar"><span class="f3" style="width:52%"></span></span><span class="v">52%</span></div>
+      <div class="row"><span class="nm">裁縫</span><span class="bar"><span class="f3" style="width:40%"></span></span><span class="v">40%</span></div>
+    </div>
+    シージ兵装の仕上げ加工%として採用されるのは、一番低い<strong>料理の35%</strong>(＝各パラメータ +3,500)。ここから伸ばすなら<strong>料理職人の出番</strong>。
+  </div>
+
   <h3>ptの稼ぎ方 ― タスク1回ごと</h3>
   <ul class="tight">
     <li>基本 <strong>100pt ＋ ボーナス抽選</strong>。ボーナスは <code>0 〜 該当ライフスキルLv ÷ 10</code> の範囲で、<strong>低い値ほど出やすい</strong>重み付き抽選(上振れはレア。等倍ではない)。</li>
@@ -216,8 +319,8 @@
   </ul>
   <p class="note">人が多いほど・全体のスキルが高いほど要求ptも上がる。「みんなの半分が2日間がんばれば満点」が常に基準になる。</p>
 
-  <h3>5つのゲージと効果</h3>
-  <p class="note">効果は<strong>仕上げ加工ゲージ</strong>の値で決まる。</p>
+  <h3>5つの強化項目と効果</h3>
+  <p class="note">効果は各強化項目の<strong>仕上げ加工%</strong>(スキル別5本のいちばん低い値)で決まる。</p>
   <div class="tw"><table>
     <thead><tr><th>ゲージ</th><th>効果</th><th>計算式</th><th>100% のとき</th></tr></thead>
     <tbody>
@@ -283,6 +386,16 @@
     <div class="calc">Lv100 の係数 100% → 80% ／ Lv50 の係数 約60% → 約48% ／ Lv1 の係数 20% → 16%</div>
     係数に対して掛かるので、<strong>強い敵ほど削られる絶対量が大きい</strong>。
   </div>
+
+  <h3>パーティ編成 ― タンクとヒーラーを行き渡らせる</h3>
+  <ul class="tight">
+    <li>戦える開拓者を<strong>戦闘力順</strong>に並べてパーティを組む(毎巡、同じロジックで組み直す)。</li>
+    <li><strong>タンクを各パーティに1人ずつ</strong>配る(第1パーティから、タンク適性の高い順)。タンク適性は<strong>討伐小隊と同じ実測ロールスコア</strong>(エントリー時に1回だけ計測)を使う。</li>
+    <li><strong>ヒーラー ＝ スタン治療を持つ開拓者</strong>(HP回復スキル発動時に、回復した相手のスタンも解除できる。現状はクレリック系)。タンクと同じく<strong>各パーティに1人ずつ</strong>配る。</li>
+    <li>ただし<strong>そのパーティのタンクがスタン治療持ちなら、ヒーラーは配らず次のパーティへ回す</strong>(役割の無駄打ちを防ぐ)。</li>
+    <li>残りの枠は戦闘力順に詰める。</li>
+  </ul>
+  <div class="callout new"><span class="lbl">世界線シミュはやらない</span>ロールがはっきり分かれきっていないゲームなので「完璧にバランスの良い編成」は狙わない。討伐小隊の<strong>世界線シミュレーション選抜は100パーティ規模では重い</strong>ため、上の<strong>軽い割り振りルール</strong>で行き渡らせる方式にする。</div>
 
   <h3>1巡目 ― 戦闘力順マッチ</h3>
   <ul class="tight">
@@ -467,6 +580,41 @@
 </div>
 
 </div>
+
+<script>
+(function () {
+  var track = document.getElementById('slTrack');
+  var dots = document.getElementById('slDots');
+  if (!track || !dots) return;
+  var cards = Array.prototype.slice.call(track.children);
+  var step = function () {
+    return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
+  };
+  var cur = function () {
+    return Math.max(0, Math.min(cards.length - 1, Math.round(track.scrollLeft / step())));
+  };
+  var go = function (i) {
+    var n = Math.max(0, Math.min(cards.length - 1, i));
+    track.scrollTo({ left: n * step(), behavior: 'smooth' });
+  };
+  cards.forEach(function (_, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'スライド' + (i + 1));
+    b.addEventListener('click', function () { go(i); });
+    dots.appendChild(b);
+  });
+  var db = Array.prototype.slice.call(dots.children);
+  var paint = function () {
+    var c = cur();
+    db.forEach(function (b, i) { b.classList.toggle('on', i === c); });
+  };
+  track.addEventListener('scroll', function () { requestAnimationFrame(paint); });
+  document.querySelector('.sl-nav.prev').addEventListener('click', function () { go(cur() - 1); });
+  document.querySelector('.sl-nav.next').addEventListener('click', function () { go(cur() + 1); });
+  paint();
+})();
+</script>
 
 </body>
 </html>
