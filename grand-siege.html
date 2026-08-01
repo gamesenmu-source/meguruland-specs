@@ -146,6 +146,16 @@
   .sl-dots{display:flex;gap:.45rem;justify-content:center;margin-top:.6rem}
   .sl-dots button{width:.62rem;height:.62rem;border-radius:50%;border:none;background:var(--border-strong);cursor:pointer;padding:0}
   .sl-dots button.on{background:var(--accent)}
+  /* ---- スキル別内訳トグル ---- */
+  .sk-toggle{display:block;margin:.7rem 0 0;padding:.42rem .9rem;border-radius:8px;cursor:pointer;
+    border:1px solid var(--border-strong);background:var(--surface);color:var(--accent);
+    font-size:.85rem;font-weight:700}
+  .sk-toggle:hover{background:var(--accent-soft)}
+  .sk-detail{margin-top:.7rem;border-top:1px dashed var(--border-strong);padding-top:.6rem}
+  .sk-group{margin-bottom:.7rem}
+  .sk-group:last-of-type{margin-bottom:0}
+  .sk-gt{font-size:.82rem;font-weight:600;margin-bottom:.25rem}
+  .sk-gt i{display:inline-block;width:.7rem;height:.7rem;border-radius:3px;margin-right:.3rem;vertical-align:-1px}
 </style>
 
 <div class="wrap">
@@ -272,16 +282,6 @@
   <div class="callout new"><span class="lbl">スキル別ゲージ ― 一番低いところが全体を決める</span>各フェーズは<strong>担当ライフスキル5種それぞれのゲージ</strong>を持つ(強化項目5 × フェーズ3 × スキル5 ＝ <strong>75本</strong>)。
   フェーズの進捗%は<strong>5本のうち一番低いゲージの値</strong>。1つのスキルだけ猛烈に進めても、他のスキルが置いていかれると全体は進まない ― <strong>いろんな職人が全員必要</strong>。</div>
 
-  <div class="ex"><span class="lbl">例: シージ兵装の「仕上げ加工」スキル別5本</span>
-    <div class="stack">
-      <div class="row"><span class="nm">鍛冶</span><span class="bar"><span class="f3" style="width:60%"></span></span><span class="v">60%</span></div>
-      <div class="row"><span class="nm">料理</span><span class="bar"><span class="f3" style="width:35%"></span></span><span class="v"><strong>35% ← 最低</strong></span></div>
-      <div class="row"><span class="nm">木工</span><span class="bar"><span class="f3" style="width:48%"></span></span><span class="v">48%</span></div>
-      <div class="row"><span class="nm">錬金</span><span class="bar"><span class="f3" style="width:52%"></span></span><span class="v">52%</span></div>
-      <div class="row"><span class="nm">裁縫</span><span class="bar"><span class="f3" style="width:40%"></span></span><span class="v">40%</span></div>
-    </div>
-    シージ兵装の仕上げ加工%として採用されるのは、一番低い<strong>料理の35%</strong>(＝各パラメータ +3,500)。ここから伸ばすなら<strong>料理職人の出番</strong>。
-  </div>
 
   <h3>ptの稼ぎ方 ― タスク1回ごと</h3>
   <ul class="tight">
@@ -308,6 +308,41 @@
     <div class="lgd"><span><i style="background:var(--p1)"></i>採取 70%</span><span><i style="background:var(--p2)"></i>下地加工 45%</span><span><i style="background:var(--p3)"></i>仕上げ加工 30%</span></div>
     ％はそれぞれ「スキル別5本のうち一番低い値」。効果は<strong>仕上げ加工の30%</strong>ぶん(＝各パラメータ +3,000)。<br>
     下地加工の各ゲージは<strong>採取45%…ではなく採取70%(min適用後)まで</strong>、仕上げ加工の各ゲージは<strong>下地45%まで</strong>しか進められない。上限に達しているタスクは受注できない(受注時に判定するので、ptが無駄になることはない)。
+
+    <button type="button" class="sk-toggle" id="skToggle" aria-expanded="false" aria-controls="skDetail">▾ スキル別の内訳を開く</button>
+    <div class="sk-detail" id="skDetail" hidden>
+      <div class="sk-group">
+        <div class="sk-gt"><i style="background:var(--p1)"></i>採取 ― 最低は<strong>釣り 70%</strong></div>
+        <div class="stack">
+          <div class="row"><span class="nm">農業</span><span class="bar"><span class="f1" style="width:82%"></span></span><span class="v">82%</span></div>
+          <div class="row"><span class="nm">採掘</span><span class="bar"><span class="f1" style="width:75%"></span></span><span class="v">75%</span></div>
+          <div class="row"><span class="nm">釣り</span><span class="bar"><span class="f1" style="width:70%"></span></span><span class="v"><strong>70% ← 最低</strong></span></div>
+          <div class="row"><span class="nm">狩猟</span><span class="bar"><span class="f1" style="width:88%"></span></span><span class="v">88%</span></div>
+          <div class="row"><span class="nm">採集</span><span class="bar"><span class="f1" style="width:79%"></span></span><span class="v">79%</span></div>
+        </div>
+      </div>
+      <div class="sk-group">
+        <div class="sk-gt"><i style="background:var(--p2)"></i>下地加工 ― 最低は<strong>料理 45%</strong>(各ゲージは採取70%まで)</div>
+        <div class="stack">
+          <div class="row"><span class="nm">鍛冶</span><span class="bar"><span class="f2" style="width:58%"></span></span><span class="v">58%</span></div>
+          <div class="row"><span class="nm">料理</span><span class="bar"><span class="f2" style="width:45%"></span></span><span class="v"><strong>45% ← 最低</strong></span></div>
+          <div class="row"><span class="nm">木工</span><span class="bar"><span class="f2" style="width:61%"></span></span><span class="v">61%</span></div>
+          <div class="row"><span class="nm">錬金</span><span class="bar"><span class="f2" style="width:52%"></span></span><span class="v">52%</span></div>
+          <div class="row"><span class="nm">裁縫</span><span class="bar"><span class="f2" style="width:49%"></span></span><span class="v">49%</span></div>
+        </div>
+      </div>
+      <div class="sk-group">
+        <div class="sk-gt"><i style="background:var(--p3)"></i>仕上げ加工 ― 最低は<strong>料理 30%</strong>(各ゲージは下地45%まで)</div>
+        <div class="stack">
+          <div class="row"><span class="nm">鍛冶</span><span class="bar"><span class="f3" style="width:41%"></span></span><span class="v">41%</span></div>
+          <div class="row"><span class="nm">料理</span><span class="bar"><span class="f3" style="width:30%"></span></span><span class="v"><strong>30% ← 最低</strong></span></div>
+          <div class="row"><span class="nm">木工</span><span class="bar"><span class="f3" style="width:38%"></span></span><span class="v">38%</span></div>
+          <div class="row"><span class="nm">錬金</span><span class="bar"><span class="f3" style="width:35%"></span></span><span class="v">35%</span></div>
+          <div class="row"><span class="nm">裁縫</span><span class="bar"><span class="f3" style="width:33%"></span></span><span class="v">33%</span></div>
+        </div>
+      </div>
+      <p class="note" style="margin:.4rem 0 0">この項目をいま前へ進めるのは<strong>料理職人</strong>(下地45%・仕上げ30%の両方で最低)。採取は釣りがボトルネック。ゲーム内の進捗UIもこの形 ― <strong>ふだんはフェーズ別、開くとスキル別</strong> ― にする。</p>
+    </div>
   </div>
 
   <h3>要求pt ― 発動のたびに自動で設定</h3>
@@ -613,6 +648,17 @@
   document.querySelector('.sl-nav.prev').addEventListener('click', function () { go(cur() - 1); });
   document.querySelector('.sl-nav.next').addEventListener('click', function () { go(cur() + 1); });
   paint();
+})();
+(function () {
+  var btn = document.getElementById('skToggle');
+  var panel = document.getElementById('skDetail');
+  if (!btn || !panel) return;
+  btn.addEventListener('click', function () {
+    var open = panel.hidden;
+    panel.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? '▴ スキル別の内訳を閉じる' : '▾ スキル別の内訳を開く';
+  });
 })();
 </script>
 
