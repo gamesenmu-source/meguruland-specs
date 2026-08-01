@@ -170,6 +170,14 @@
   .sk-capline{position:absolute;width:0;border-left:2px dashed var(--warn);z-index:0;pointer-events:none;opacity:.85}
   .sk-note{margin:.55rem 0 0;font-size:.8rem;color:var(--muted)}
   .sk-note i{display:inline-block;width:.7rem;height:.7rem;margin-right:.25rem;vertical-align:-1px;border-radius:3px}
+  /* スライド用のコンパクト版ゲージ */
+  .sl-gauge .row{margin:.16rem 0}
+  .sl-gauge .bar{height:.68rem;border:1px solid var(--border)}
+  .sl-gauge .nm{flex-basis:4.2rem;font-size:.78rem}
+  .sl-gauge .v{flex-basis:6.6rem;font-size:.75rem}
+  .sl-gauge .gh{position:relative;z-index:1;font-size:.74rem;font-weight:700;margin:.35rem 0 .1rem;color:var(--muted)}
+  .sl-gauge .gh i{display:inline-block;width:.6rem;height:.6rem;border-radius:2px;margin-right:.3rem;vertical-align:-1px}
+  .sl-gauge .skip{flex:1;text-align:center;color:var(--muted);font-size:.85rem;line-height:.5;position:relative}
 </style>
 
 <div class="wrap">
@@ -204,13 +212,27 @@
       </div>
       <div class="sl-card">
         <div class="sl-tit">素材は不要。タスクを回して戦力づくり</div>
-        <div class="sl-fig"><div class="stack" style="width:100%;max-width:27rem;margin:0">
-          <div class="row"><span class="nm" style="flex-basis:5.4rem">シージ兵装</span><span class="bar"><span class="f1" style="width:70%"></span><span class="f2" style="width:45%"></span><span class="f3" style="width:30%"></span></span><span class="v" style="flex-basis:7rem">採70 / 下45 / 仕30</span></div>
-          <div class="row"><span class="nm" style="flex-basis:5.4rem;color:var(--muted)">└ 鍛冶</span><span class="bar" style="border:1px solid var(--border)"><span class="glock" style="left:70%"></span><span class="f2" style="width:58%"></span><span class="capd" style="left:70%"></span></span><span class="v" style="flex-basis:7rem">58%</span></div>
-          <div class="row"><span class="nm" style="flex-basis:5.4rem;color:var(--muted)">└ 料理</span><span class="bar" style="border:1px solid var(--border)"><span class="glock" style="left:70%"></span><span class="f2" style="width:45%"></span><span class="capd" style="left:70%"></span></span><span class="v" style="flex-basis:7rem"><strong>45% ← 最低</strong></span></div>
-          <div class="row"><span class="nm" style="flex-basis:5.4rem;color:var(--muted)">└ 木工</span><span class="bar" style="border:1px solid var(--border)"><span class="glock" style="left:70%"></span><span class="f2" style="width:61%"></span><span class="capd" style="left:70%"></span></span><span class="v" style="flex-basis:7rem">61%</span></div>
+        <div class="sl-fig"><div class="stack sl-gauge sk-chart" id="sl2Chart" style="width:100%;max-width:27rem;margin:0">
+          <div id="sl2G1">
+            <div class="gh"><i style="background:var(--p1)"></i>採取</div>
+            <div class="row"><span class="nm">狩猟</span><span class="bar"><span class="f1" style="width:88%"></span></span><span class="v">88% (最高)</span></div>
+            <div class="row"><span class="nm"></span><span class="skip">⋮</span><span class="v"></span></div>
+            <div class="row" id="sl2Min1"><span class="nm">釣り</span><span class="bar"><span class="f1" style="width:70%"></span></span><span class="v"><strong>70% ← 最低</strong></span></div>
+          </div>
+          <div id="sl2G2">
+            <div class="gh"><i style="background:var(--p2)"></i>下地加工</div>
+            <div class="row"><span class="nm">木工</span><span class="bar"><span class="glock" style="left:70%"></span><span class="f2" style="width:61%"></span></span><span class="v">61% (最高)</span></div>
+            <div class="row"><span class="nm"></span><span class="skip">⋮</span><span class="v"></span></div>
+            <div class="row" id="sl2Min2"><span class="nm">料理</span><span class="bar"><span class="glock" style="left:70%"></span><span class="f2" style="width:45%"></span></span><span class="v"><strong>45% ← 最低</strong></span></div>
+          </div>
+          <div id="sl2G3">
+            <div class="gh"><i style="background:var(--p3)"></i>仕上げ加工</div>
+            <div class="row"><span class="nm">鍛冶</span><span class="bar"><span class="glock" style="left:45%"></span><span class="f3" style="width:41%"></span></span><span class="v">41% (最高)</span></div>
+            <div class="row"><span class="nm"></span><span class="skip">⋮</span><span class="v"></span></div>
+            <div class="row"><span class="nm">料理</span><span class="bar"><span class="glock" style="left:45%"></span><span class="f3" style="width:30%"></span></span><span class="v"><strong>30% ← 最低</strong></span></div>
+          </div>
         </div></div>
-        <p class="sl-txt">タスク1回ごとにptが貯まる(スキルLvとマスタリーで増える)。ゲージは<strong>スキル別</strong>で<strong>一番低いところが全体の進み</strong>。黒塗りは<strong>前フェーズ待ち</strong>で今は積めない領域(赤点線=上限)。</p>
+        <p class="sl-txt">タスク1回ごとにptが貯まる(スキルLvとマスタリーで増える)。ゲージは<strong>スキル別</strong>で<strong>一番低いところが次フェーズの上限</strong>(赤点線)。黒塗りは<strong>前フェーズ待ち</strong>で今は積めない。</p>
       </div>
       <div class="sl-card">
         <div class="sl-tit">仕上げた分だけ、戦況がまるごと有利に</div>
@@ -666,20 +688,14 @@
   paint();
 })();
 (function () {
-  var btn = document.getElementById('skToggle');
-  var panel = document.getElementById('skDetail');
-  if (!btn || !panel) return;
   // 前フェーズの最低ゲージ先端から次フェーズの帯まで、上限の点線を引く。
   // 各スキルのゲージ(ピル)は不透明なので、点線は行間だけに見える=バーが前面。
-  var drawCapLines = function () {
-    var chart = document.getElementById('skChart');
-    if (!chart || panel.hidden) return;
+  var drawCaps = function (chartId, specs) {
+    var chart = document.getElementById(chartId);
+    if (!chart || chart.offsetParent === null) return;
     Array.prototype.forEach.call(chart.querySelectorAll('.sk-capline'), function (e) { e.remove(); });
     var cref = chart.getBoundingClientRect();
-    [
-      { src: 'skMin1', tgt: 'skG2', pct: 70 },
-      { src: 'skMin2', tgt: 'skG3', pct: 45 }
-    ].forEach(function (s) {
+    specs.forEach(function (s) {
       var src = document.getElementById(s.src);
       var tgt = document.getElementById(s.tgt);
       if (!src || !tgt) return;
@@ -695,14 +711,29 @@
       chart.appendChild(line);
     });
   };
-  btn.addEventListener('click', function () {
-    var open = panel.hidden;
-    panel.hidden = !open;
-    btn.setAttribute('aria-expanded', String(open));
-    btn.textContent = open ? '▴ スキル別の内訳を閉じる' : '▾ スキル別の内訳を開く';
-    if (open) requestAnimationFrame(drawCapLines);
-  });
-  window.addEventListener('resize', function () { requestAnimationFrame(drawCapLines); });
+  var drawAll = function () {
+    drawCaps('skChart', [
+      { src: 'skMin1', tgt: 'skG2', pct: 70 },
+      { src: 'skMin2', tgt: 'skG3', pct: 45 }
+    ]);
+    drawCaps('sl2Chart', [
+      { src: 'sl2Min1', tgt: 'sl2G2', pct: 70 },
+      { src: 'sl2Min2', tgt: 'sl2G3', pct: 45 }
+    ]);
+  };
+  var btn = document.getElementById('skToggle');
+  var panel = document.getElementById('skDetail');
+  if (btn && panel) {
+    btn.addEventListener('click', function () {
+      var open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? '▴ スキル別の内訳を閉じる' : '▾ スキル別の内訳を開く';
+      if (open) requestAnimationFrame(drawAll);
+    });
+  }
+  window.addEventListener('resize', function () { requestAnimationFrame(drawAll); });
+  requestAnimationFrame(drawAll);
 })();
 </script>
 
