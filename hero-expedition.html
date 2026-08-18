@@ -726,9 +726,39 @@
     </div>
   </section>
 
-  <!-- ============ 07 経済ループ ============ -->
+  <!-- ============ 08 ダンジョンの地図 ============ -->
   <section class="slide">
-    <div class="eyebrow">08<span class="sep">/</span>ねらい</div>
+    <div class="eyebrow">08<span class="sep">/</span>ダンジョン拡張</div>
+    <h2>新ダンジョンは「地図」で解放</h2>
+    <p class="lede">2つ目以降のダンジョンはグレードではなく、<strong>「ダンジョンの地図」</strong>を使って解放する。地図はレア枠のアイテムとして、特定のヒーローだけが見つけられる。</p>
+
+    <div class="flow">
+      <div class="node">
+        <div class="t">🗺️ 地図がレア枠で出る</div>
+        <div class="d">発見率を持つ特定ヒーローが、ラッキー中にだけ引き当てる</div>
+      </div>
+      <div class="arr">→</div>
+      <div class="node">
+        <div class="t">📜 使用して解放</div>
+        <div class="d">新ダンジョンが探検先に追加される（プレイヤーごとに解放）</div>
+      </div>
+      <div class="arr">→</div>
+      <div class="node">
+        <div class="t">⛰️ 新しい素材と、次の地図</div>
+        <div class="d">新ダンジョンのテーブルに、さらに先の地図を仕込める</div>
+      </div>
+    </div>
+
+    <div class="rare-banner">
+      <div class="ic">🗺️</div>
+      <p>解放が「レベルを上げて待つ」ではなく<strong>「地図を持つヒーローを呼び、ラッキーにして引き当てる」</strong>になる。フィギュア集め・ラッキーアイテム・発見率の3要素すべてがダンジョン拡張の鍵になり、数珠つなぎで世界を広げていける。</p>
+    </div>
+    <p class="footnote">例: 岩壁の洞窟のテーブルに「海岸の地図」重み100・レアフラグで追加し、発見率を持つのは新ヒーローだけ（率1=10%なら実効10）。地図もItemなので既存方針（全てtradeable）に従えば市場で売買でき、「引きが弱い人は買って解放」もできる——取引可否は未決事項へ。</p>
+  </section>
+
+  <!-- ============ 09 経済ループ ============ -->
+  <section class="slide">
+    <div class="eyebrow">09<span class="sep">/</span>ねらい</div>
     <h2>マイルームと市場をつなぐ循環</h2>
     <p class="lede">3つの新要素は、それぞれが既存コンテンツへの需要を作るように配置している。</p>
 
@@ -750,8 +780,8 @@
       </div>
       <div class="lnode">
         <div class="ic">💠</div>
-        <h3>レア素材を持ち帰る</h3>
-        <p>装備製作・調合の材料に</p>
+        <h3>レア素材・地図を持ち帰る</h3>
+        <p>装備製作の材料や、新ダンジョンの解放に</p>
       </div>
       <div class="lnode">
         <div class="ic">⚖️</div>
@@ -764,7 +794,7 @@
 
   <!-- ============ 08 未決事項 ============ -->
   <section class="slide">
-    <div class="eyebrow">09<span class="sep">/</span>これから決めること</div>
+    <div class="eyebrow">10<span class="sep">/</span>これから決めること</div>
     <h2>未決事項と実装メモ</h2>
 
     <div class="qa">
@@ -788,6 +818,10 @@
         <h3>フィギュア棚のヒント表示</h3>
         <p>未入手枠のシルエットに「ゆかりの家具」をどこまで見せるか（全部隠す／1種だけチラ見せ）。</p>
       </div>
+      <div class="q">
+        <h3>ダンジョンの地図の取り扱い</h3>
+        <p>取引可能にするか（既存方針は全てtradeable。売買を認めると「地図の相場」が生まれる）。2つ目のダンジョンと地図を持つヒーローの割り当ても要決定。</p>
+      </div>
     </div>
 
     <div class="impl">
@@ -797,6 +831,7 @@
         <li>DungeonMissReward は「ダンジョン共通テーブル（重み最低100＋レアフラグ）」へ改修。発見率はヒーロー×品目の別マスタ</li>
         <li>抽選解決（simulate / claim）: 人数別間隔テーブルを単一50分に変更し、1抽選＝編成人数分のドローに。ラッキーの減衰も同じ決定的計算に乗せる</li>
         <li>PlayerHero にラッキーカラム追加（残り回数・整数）</li>
+        <li>ダンジョン解放を grade 制から地図制へ: PlayerDungeonUnlock (player×dungeon) 追加＋地図Itemの使用API。既存の岩壁の洞窟は解放済み扱い</li>
         <li>フィギュア棚は独立した新規ページ（フロント）。枠の母集合は HeroMaster (is_active) を流用し、未入手はシルエット表示</li>
         <li>フィギュア郵送の日次バッチは prod cron 登録が1件増える（登録忘れに注意）</li>
       </ul>
