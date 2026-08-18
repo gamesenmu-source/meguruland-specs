@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ヒーロー探検隊 拡張仕様</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+  :root {
+    --ground: #F1E9DA;
+    --card: #FBF7EF;
+    --card-deep: #EFE5D2;
+    --line: #D9CCB4;
+    --ink: #33291D;
+    --muted: #83745F;
+    --copper: #B96A22;
+    --copper-soft: #F3E0C9;
+    --green: #67824A;
+    --green-soft: #E4EAD6;
+    --gold: #B08109;
+    --gold-soft: #F5E7C0;
+    --rare: #77598F;
+    --rare-soft: #E9E0F1;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #201A12;
+      --card: #2A2318;
+      --card-deep: #332A1D;
+      --line: #4A3F2E;
+      --ink: #EAE0CE;
+      --muted: #A2937C;
+      --copper: #D98E45;
+      --copper-soft: #43301C;
+      --green: #93B06E;
+      --green-soft: #2E3622;
+      --gold: #DDB33F;
+      --gold-soft: #3E3316;
+      --rare: #A98BC9;
+      --rare-soft: #362B42;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #201A12;
+    --card: #2A2318;
+    --card-deep: #332A1D;
+    --line: #4A3F2E;
+    --ink: #EAE0CE;
+    --muted: #A2937C;
+    --copper: #D98E45;
+    --copper-soft: #43301C;
+    --green: #93B06E;
+    --green-soft: #2E3622;
+    --gold: #DDB33F;
+    --gold-soft: #3E3316;
+    --rare: #A98BC9;
+    --rare-soft: #362B42;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Meiryo", sans-serif;
+    line-height: 1.9;
+    font-size: 15.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .deck { max-width: 960px; margin: 0 auto; padding: 0 28px; }
+
+  .slide {
+    padding: 88px 0 72px;
+    border-bottom: 1px solid var(--line);
+  }
+  .slide:last-child { border-bottom: none; }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: .22em;
+    color: var(--copper);
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .eyebrow .sep { color: var(--muted); margin: 0 8px; font-weight: 400; }
+
+  h1, h2 {
+    font-family: "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    text-wrap: balance;
+    line-height: 1.45;
+    font-weight: 700;
+  }
+  h1 { font-size: clamp(32px, 5vw, 46px); margin-bottom: 26px; }
+  h2 { font-size: clamp(24px, 3.6vw, 32px); margin-bottom: 14px; }
+  .lede { color: var(--muted); max-width: 34em; margin-bottom: 40px; }
+  .lede strong { color: var(--ink); font-weight: 700; }
+
+  /* ---- title slide ---- */
+  .title-slide { padding: 110px 0 80px; }
+  .title-meta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
+  .chip {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 18px;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+  .chip span { color: var(--copper); margin-right: 6px; }
+
+  /* ---- flow ---- */
+  .flow {
+    display: flex; align-items: stretch; flex-wrap: wrap;
+    gap: 10px; margin: 34px 0;
+  }
+  .flow .node {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    flex: 1 1 130px;
+    min-width: 130px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .flow .node .t { font-weight: 700; font-size: 14.5px; line-height: 1.5; }
+  .flow .node .d { font-size: 12.5px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .flow .arr {
+    align-self: center; color: var(--copper);
+    font-size: 20px; font-weight: 700; padding: 0 2px;
+  }
+  .flow .arr small { display: block; font-size: 10.5px; color: var(--muted); font-weight: 400; text-align: center; letter-spacing: .05em; }
+
+  .split { display: flex; flex-direction: column; gap: 8px; flex: 1 1 150px; min-width: 150px; }
+  .split .node { flex: 1; }
+  .node.box-hit { border-left: 4px solid var(--copper); }
+  .node.box-miss { border-left: 4px solid var(--green); }
+
+  /* ---- stat tiles ---- */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 30px 0 8px; }
+  .stat {
+    background: var(--card-deep);
+    border-radius: 14px;
+    padding: 18px 18px 14px;
+  }
+  .stat .k { font-size: 12px; color: var(--muted); letter-spacing: .1em; font-weight: 700; }
+  .stat .v {
+    font-size: 26px; font-weight: 700; line-height: 1.3; margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .v small { font-size: 13px; color: var(--muted); font-weight: 400; margin-left: 2px; }
+  .stat.hl { background: var(--copper-soft); }
+  .stat.hl .v { color: var(--copper); }
+
+  .footnote { font-size: 13px; color: var(--muted); margin-top: 22px; }
+
+  /* ---- problem / policy cards ---- */
+  .cards3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 32px; }
+  .pcard {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 22px;
+  }
+  .pcard .num {
+    font-family: "Noto Serif JP", "Yu Mincho", serif;
+    font-size: 15px; color: var(--copper); font-weight: 700; letter-spacing: .1em;
+    margin-bottom: 10px;
+  }
+  .pcard h3 { font-size: 16.5px; margin-bottom: 8px; line-height: 1.6; }
+  .pcard p { font-size: 13.5px; color: var(--muted); line-height: 1.85; }
+
+  .problem-box {
+    background: var(--card-deep);
+    border-radius: 16px;
+    padding: 26px 28px;
+    margin-top: 8px;
+  }
+  .problem-box + .problem-box { margin-top: 14px; }
+  .problem-box.premise { background: var(--copper-soft); }
+  .problem-box .tag {
+    display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .15em;
+    color: var(--ground); background: var(--muted);
+    border-radius: 6px; padding: 2px 10px; margin-bottom: 12px;
+  }
+  .problem-box.premise .tag { background: var(--copper); }
+  .problem-box p { max-width: 38em; }
+
+  /* ---- steps ---- */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin: 34px 0 10px; }
+  .step {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 20px;
+    position: relative;
+  }
+  .step .icon { font-size: 30px; line-height: 1; margin-bottom: 14px; }
+  .step .no {
+    position: absolute; top: 18px; right: 18px;
+    font-family: "Noto Serif JP", "Yu Mincho", serif; font-weight: 700;
+    color: var(--copper); font-size: 14px; letter-spacing: .08em;
+  }
+  .step h3 { font-size: 15.5px; margin-bottom: 6px; }
+  .step p { font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+  /* ---- party diagram ---- */
+  .party-wrap { margin: 34px 0 10px; }
+  .party-clock {
+    text-align: center;
+    background: var(--card-deep);
+    border-radius: 14px;
+    padding: 14px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .party-clock small { display: block; font-weight: 400; font-size: 12.5px; color: var(--muted); }
+  .party-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .hero-draw {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+  .hero-draw .face { font-size: 34px; }
+  .hero-draw .name { font-weight: 700; margin: 8px 0 12px; }
+  .hero-draw .act {
+    font-size: 13px; background: var(--green-soft); color: var(--green);
+    border-radius: 8px; padding: 6px 10px; font-weight: 700; margin-bottom: 8px;
+  }
+  .hero-draw .cost { font-size: 12.5px; color: var(--muted); }
+  .hero-draw.ghost { opacity: .55; border-style: dashed; }
+
+  /* ---- formula ---- */
+  .formula {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 36px 24px;
+    text-align: center;
+    margin: 34px 0;
+    font-family: "Noto Serif JP", "Yu Mincho", serif;
+    font-size: clamp(17px, 3vw, 24px);
+    font-weight: 700;
+    line-height: 1.7;
+  }
+  .formula .op { color: var(--copper); padding: 0 10px; }
+  .formula .part { white-space: nowrap; }
+  .formula small { display: block; font-family: "Noto Sans JP", sans-serif; font-size: 12.5px; color: var(--muted); font-weight: 400; margin-top: 12px; }
+
+  /* ---- hero tables ---- */
+  .hero-tables { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 10px; }
+  .htable {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .htable .hh { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .htable .hh .face { font-size: 30px; }
+  .htable .hh .n { font-weight: 700; }
+  .htable .hh .sub { font-size: 12px; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th {
+    text-align: left; font-size: 11.5px; color: var(--muted);
+    letter-spacing: .08em; font-weight: 700;
+    padding: 6px 8px; border-bottom: 1px solid var(--line);
+  }
+  th.r, td.r { text-align: right; font-variant-numeric: tabular-nums; }
+  td { padding: 9px 8px; border-bottom: 1px solid var(--line); }
+  tr:last-child td { border-bottom: none; }
+  td .rare-tag {
+    display: inline-block; font-size: 10.5px; font-weight: 700;
+    color: var(--rare); background: var(--rare-soft);
+    border-radius: 5px; padding: 1px 7px; margin-left: 6px; vertical-align: 1px;
+  }
+  td.zero { color: var(--muted); }
+  td.hit { color: var(--copper); font-weight: 700; }
+  .htable .note { font-size: 12.5px; color: var(--muted); margin-top: 12px; line-height: 1.8; }
+
+  /* ---- zekkocho ---- */
+  .zk-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px;
+    margin: 34px 0 18px;
+  }
+  .zk-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .zk-head .face { font-size: 38px; }
+  .zk-head .n { font-weight: 700; font-size: 16px; }
+  .zk-head .s { font-size: 12.5px; color: var(--muted); }
+  .gauge { margin-bottom: 16px; }
+  .gauge .lbl { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; margin-bottom: 6px; }
+  .gauge .lbl .val { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 400; }
+  .bar { height: 14px; background: var(--card-deep); border-radius: 999px; overflow: hidden; }
+  .bar .fill { height: 100%; border-radius: 999px; }
+  .fill.stamina { width: 64%; background: var(--copper); }
+  .fill.zk { width: 30%; background: var(--gold); }
+  .gauge.zk-g .lbl { color: var(--gold); }
+
+  .zk-flow { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; margin-top: 6px; }
+  .zk-flow .node { flex: 1 1 160px; }
+
+  .rare-banner {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--rare-soft);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-top: 20px;
+  }
+  .rare-banner .ic { font-size: 24px; line-height: 1.4; }
+  .rare-banner p { font-size: 13.5px; line-height: 1.85; }
+  .rare-banner strong { color: var(--rare); }
+
+  /* ---- economy loop ---- */
+  .loop { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 34px 0 6px; }
+  .loop .lnode {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+  }
+  .loop .lnode .ic { font-size: 28px; margin-bottom: 10px; }
+  .loop .lnode h3 { font-size: 14px; margin-bottom: 4px; }
+  .loop .lnode p { font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .loop-return {
+    text-align: center; color: var(--copper); font-weight: 700; font-size: 13px;
+    margin-top: 16px; letter-spacing: .08em;
+  }
+
+  /* ---- open questions ---- */
+  .qa { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 30px; }
+  .q {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+  .q h3 { font-size: 14.5px; margin-bottom: 6px; }
+  .q h3::before { content: "Q. "; color: var(--copper); font-family: "Noto Serif JP", "Yu Mincho", serif; }
+  .q p { font-size: 13px; color: var(--muted); line-height: 1.85; }
+  .impl {
+    margin-top: 44px;
+    background: var(--card-deep);
+    border-radius: 16px;
+    padding: 24px 26px;
+  }
+  .impl h3 { font-size: 13px; letter-spacing: .15em; color: var(--muted); margin-bottom: 12px; }
+  .impl ul { list-style: none; }
+  .impl li { font-size: 13px; color: var(--muted); padding: 4px 0 4px 1.3em; position: relative; line-height: 1.8; }
+  .impl li::before { content: "▸"; position: absolute; left: 0; color: var(--copper); }
+
+  .tail { text-align: center; padding: 60px 0 80px; color: var(--muted); font-size: 13px; }
+
+  @media (max-width: 640px) {
+    .slide { padding: 64px 0 52px; }
+    .flow { flex-direction: column; }
+    .flow .arr { transform: rotate(90deg); padding: 2px 0; }
+    .flow .arr small { transform: rotate(-90deg); display: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .slide { scroll-margin-top: 20px; }
+  }
+</style>
+
+<div class="deck">
+
+  <!-- ============ TITLE ============ -->
+  <header class="slide title-slide">
+    <div class="eyebrow">メグルランド<span class="sep">/</span>仕様案 draft<span class="sep">/</span>2026-08-18</div>
+    <h1>ヒーロー探検隊<br>拡張仕様</h1>
+    <p class="lede">フィギュアの増やし方・編成の伸ばし方・素材の見つけ方。<br>3つの新要素を、ひとつの経済ループとしてつなげる案。</p>
+    <div class="title-meta">
+      <div class="chip"><span>1</span>フィギュアはマイルームに届く</div>
+      <div class="chip"><span>2</span>抽選はヒーローごとに独立</div>
+      <div class="chip"><span>3</span>ラッキーがレア素材の入場券</div>
+    </div>
+  </header>
+
+  <!-- ============ 01 現状 ============ -->
+  <section class="slide">
+    <div class="eyebrow">01<span class="sep">/</span>現状のおさらい</div>
+    <h2>いまの探検隊 — 1体・放置・50分に1回</h2>
+    <p class="lede">編成して放置すると、一定間隔で抽選が走って成果が貯まる。ページで「受け取り」した瞬間に、経過時間からまとめて計算する方式。</p>
+
+    <div class="flow">
+      <div class="node">
+        <div class="t">🗿 編成</div>
+        <div class="d">いまはダビデ1体のみ（ベータ制限）</div>
+      </div>
+      <div class="arr">→<small>50分ごと</small></div>
+      <div class="node">
+        <div class="t">🎲 抽選</div>
+        <div class="d">スタミナ10消費<br>切れたら食料庫から自動補給</div>
+      </div>
+      <div class="arr">→</div>
+      <div class="split">
+        <div class="node box-hit">
+          <div class="t">宝箱 12%</div>
+          <div class="d">普通10.8 / 貴重1.0 / 豪華0.2%</div>
+        </div>
+        <div class="node box-miss">
+          <div class="t">素材 88%</div>
+          <div class="d">石・蜘蛛の糸ほか7種<br>（テーブルはダンジョン持ち）</div>
+        </div>
+      </div>
+      <div class="arr">→</div>
+      <div class="node">
+        <div class="t">📦 受け取り</div>
+        <div class="d">成果は最大50回分まで貯まる</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">解放</div><div class="v">G8<small>から</small></div></div>
+      <div class="stat"><div class="k">スタミナ</div><div class="v">10<small>/抽選</small></div></div>
+      <div class="stat"><div class="k">食料貯蔵庫</div><div class="v">1000<small>上限</small></div></div>
+      <div class="stat"><div class="k">編成上限</div><div class="v">1<small>体（本来は3）</small></div></div>
+    </div>
+    <p class="footnote">ダンジョンは「岩壁の洞窟」1種。宝箱はマーケット取引可・開封は別システム（今回は触らない）。</p>
+  </section>
+
+  <!-- ============ 02 課題と方針 ============ -->
+  <section class="slide">
+    <div class="eyebrow">02<span class="sep">/</span>課題と方針</div>
+    <h2>「合算テーブル＋逓減」はやめる</h2>
+
+    <div class="problem-box premise">
+      <div class="tag">前提（やりたいこと）</div>
+      <p>ヒーローの個性として<strong>「ヒーローごとのアイテム発見テーブル」</strong>を導入したい。いまは素材テーブルをダンジョンだけが持っているが、「このヒーローはレア鉱石に強い」のように、<strong>誰を編成するかで手に入る素材が変わる</strong>ようにする。</p>
+    </div>
+
+    <div class="problem-box">
+      <div class="tag">ボツにした案</div>
+      <p>その実現方法として、編成メンバー全員のテーブルを<strong>ひとつに合算して回す</strong>方式を検討したが — 狙いの素材（＝特定のヒーローだけが見つけられる素材）を持たない仲間を足すほど<strong>当たりが薄まる</strong>。さらに獲得量を逓減させると伸びも中途半端になり、結局「1体運用が最適解」になってしまう。</p>
+    </div>
+
+    <div class="cards3">
+      <div class="pcard">
+        <div class="num">方針 一</div>
+        <h3>抽選はヒーローごとに独立</h3>
+        <p>1回の抽選で、編成メンバー全員がそれぞれ自分のテーブルを引く。仲間を足しても、他のヒーローの当たりは1ミリも薄まらない。</p>
+      </div>
+      <div class="pcard">
+        <div class="num">方針 二</div>
+        <h3>獲得も消費も素直に人数比例</h3>
+        <p>2体で2倍、3体で3倍。変な係数を挟まないので、プレイヤーにもそのまま説明できる。</p>
+      </div>
+      <div class="pcard">
+        <div class="num">方針 三</div>
+        <h3>レア素材は「ラッキー」で払う</h3>
+        <p>比例で増えるのは通常素材まで。レア素材にはラッキーアイテムという別の対価を設けて、経済の蛇口を締める。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 フィギュア入手 ============ -->
+  <section class="slide">
+    <div class="eyebrow">03<span class="sep">/</span>フィギュアの増やし方</div>
+    <h2>家具を揃えると、いつの間にか居る</h2>
+    <p class="lede">2体目・3体目はマイルームの家具配置から。システム的には「郵送」で届く。</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="no">壱</div>
+        <div class="icon">🪑</div>
+        <h3>対象家具を2種以上配置</h3>
+        <p>組み合わせはヒーローごとに違う「レシピ」。マスタで管理し、後から追加できる。</p>
+      </div>
+      <div class="step">
+        <div class="no">弐</div>
+        <div class="icon">🌙</div>
+        <h3>毎朝5:00に判定</h3>
+        <p>レシピを満たすプレイヤーを対象に、一定確率（千分率）で日次抽選。</p>
+      </div>
+      <div class="step">
+        <div class="no">参</div>
+        <div class="icon">📮</div>
+        <h3>当選すると郵送</h3>
+        <p>既存のメールボックスに「フィギュアが届いた」。受け取りで所持ヒーローに追加。</p>
+      </div>
+      <div class="step">
+        <div class="no">四</div>
+        <div class="icon">🗿</div>
+        <h3>マイルームに現れる</h3>
+        <p>受け取り後はマイルームに自動表示。「いつの間にか居る」演出が成立する。</p>
+      </div>
+    </div>
+    <p class="footnote">所持済みヒーローは抽選対象から除外（二重付与なし）。レシピを変えることで家具そのものに需要が生まれ、マーケットにも波及する。</p>
+  </section>
+
+  <!-- ============ 04 編成 ============ -->
+  <section class="slide">
+    <div class="eyebrow">04<span class="sep">/</span>編成と獲得量</div>
+    <h2>1回の抽選で、全員がそれぞれ引く</h2>
+    <p class="lede">抽選間隔は人数に関わらず<strong>常に50分</strong>。1回の抽選で編成メンバー全員が、自分のテーブルから1回ずつ引き、自分のスタミナを消費する。</p>
+
+    <div class="party-wrap">
+      <div class="party-clock">🎲 50分ごとの抽選<small>間隔は人数で変わらない</small></div>
+      <div class="party-row">
+        <div class="hero-draw">
+          <div class="face">🗿</div>
+          <div class="name">ダビデ</div>
+          <div class="act">自分のテーブルで1回抽選</div>
+          <div class="cost">スタミナ −10</div>
+        </div>
+        <div class="hero-draw">
+          <div class="face">🗿</div>
+          <div class="name">2体目</div>
+          <div class="act">自分のテーブルで1回抽選</div>
+          <div class="cost">スタミナ −10</div>
+        </div>
+        <div class="hero-draw ghost">
+          <div class="face">🗿</div>
+          <div class="name">3体目</div>
+          <div class="act">自分のテーブルで1回抽選</div>
+          <div class="cost">スタミナ −10</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat hl"><div class="k">獲得量</div><div class="v">×人数</div></div>
+      <div class="stat hl"><div class="k">食料消費</div><div class="v">×人数</div></div>
+      <div class="stat"><div class="k">1人あたりの負担</div><div class="v">不変</div></div>
+    </div>
+    <p class="footnote">誰か1人でも休憩に入ると探索全体が止まる仕様は現行のまま。実装面では、人数別の間隔テーブル（50/40/30分）を単一間隔に畳み、1抽選＝人数分のドローに変更する。</p>
+  </section>
+
+  <!-- ============ 05 発見率テーブル ============ -->
+  <section class="slide">
+    <div class="eyebrow">05<span class="sep">/</span>素材の見つけ方</div>
+    <h2>ダンジョンが「出る物」、ヒーローが「見つける率」</h2>
+    <p class="lede">素材テーブルは2層。ダンジョン共通テーブルがその場所で出うる物と重みを定め、ヒーローは品目ごとの<strong>発見率</strong>を持つ。</p>
+
+    <div class="formula">
+      <span class="part">ダンジョン重み</span><span class="op">×</span><span class="part">発見率 (0〜10)</span><span class="op">÷</span><span class="part">10</span><span class="op">=</span><span class="part">実効重み</span>
+      <small>重みは最低100で採番、発見率は 0〜10（＝0〜100%）。すべて整数のまま計算できる。未設定の品目は 0 ＝ 見つけられない。</small>
+    </div>
+
+    <div class="hero-tables">
+      <div class="htable">
+        <div class="hh">
+          <div class="face">🗿</div>
+          <div>
+            <div class="n">ダビデ</div>
+            <div class="sub">初期ヒーロー — 基本素材が得意</div>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr><th>品目</th><th class="r">ダンジョン重み</th><th class="r">発見率</th><th class="r">実効重み</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>石</td><td class="r">2000</td><td class="r">10</td><td class="r hit">2000</td></tr>
+            <tr><td>蜘蛛の糸</td><td class="r">2000</td><td class="r">10</td><td class="r hit">2000</td></tr>
+            <tr><td>ミスリル鉱石<span class="rare-tag">レア</span></td><td class="r">200</td><td class="r">0</td><td class="r zero">0</td></tr>
+          </tbody>
+        </table>
+        <p class="note">ミスリルは発見率が未設定（0）なので、何体入れても絶対に出ない。</p>
+      </div>
+
+      <div class="htable">
+        <div class="hh">
+          <div class="face">✨</div>
+          <div>
+            <div class="n">新ヒーロー（例）</div>
+            <div class="sub">レア鉱石に鼻が利くタイプ</div>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr><th>品目</th><th class="r">ダンジョン重み</th><th class="r">発見率</th><th class="r">実効重み</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>石</td><td class="r">2000</td><td class="r">5</td><td class="r">1000</td></tr>
+            <tr><td>蜘蛛の糸</td><td class="r">2000</td><td class="r">5</td><td class="r">1000</td></tr>
+            <tr><td>ミスリル鉱石<span class="rare-tag">レア</span></td><td class="r">200</td><td class="r">2</td><td class="r hit">40</td></tr>
+          </tbody>
+        </table>
+        <p class="note">ミスリルの当選率は 40 ÷ 2040 ≒ <strong>約2%</strong>。ただしレア枠はラッキー中だけ（次ページ）。</p>
+      </div>
+    </div>
+    <p class="footnote">ダンジョンにミスリルを重み200で足しても、見つけられるヒーローが居なければ市場には1個も流れない。供給の栓をヒーロー側で握れるのがこの2層構造の利点。</p>
+  </section>
+
+  <!-- ============ 06 絶好調 ============ -->
+  <section class="slide">
+    <div class="eyebrow">06<span class="sep">/</span>新ステータス</div>
+    <h2>ラッキー — 貢ぎ物が、レア素材の入場券</h2>
+    <p class="lede">スタミナとは別のゲージ。<strong>そのヒーローのラッキーアイテム</strong>（料理に限らずヒーローごとに設定）を与えたときだけ上がり、抽選のたびに減っていく。増える量はアイテムごとに設定し、<strong>コスト相応</strong>にする。</p>
+
+    <div class="zk-card">
+      <div class="zk-head">
+        <div class="face">🗿</div>
+        <div>
+          <div class="n">ダビデ</div>
+          <div class="s">ラッキーアイテム: トマトシチュー +12 / 銀鉱石 +4（例）</div>
+        </div>
+      </div>
+      <div class="gauge">
+        <div class="lbl"><span>スタミナ</span><span class="val">64 / 100</span></div>
+        <div class="bar"><div class="fill stamina"></div></div>
+      </div>
+      <div class="gauge zk-g">
+        <div class="lbl"><span>🍀 ラッキー</span><span class="val">のこり 9 回分</span></div>
+        <div class="bar"><div class="fill zk"></div></div>
+      </div>
+    </div>
+
+    <div class="zk-flow flow">
+      <div class="node">
+        <div class="t">🎁 ラッキーアイテムを与える</div>
+        <div class="d">ラッキー +N回分<br>（Nはアイテムの価値に応じて設定・対象外のアイテムは増えない）</div>
+      </div>
+      <div class="arr">→</div>
+      <div class="node">
+        <div class="t">🎲 抽選のたびに −1</div>
+        <div class="d">スタミナと一緒に減衰</div>
+      </div>
+      <div class="arr">→</div>
+      <div class="node">
+        <div class="t">🍀 1以上あるあいだ</div>
+        <div class="d">そのヒーローのテーブルに<br>レア枠が加わる</div>
+      </div>
+    </div>
+
+    <div class="rare-banner">
+      <div class="ic">💠</div>
+      <p><strong>レア枠はダンジョン共通テーブル側のフラグ</strong>（例: ミスリル鉱石）。ラッキーが0のヒーローは、発見率を持っていても通常枠のみで抽選する。つまりレア素材は「ラッキーアイテムを貢ぎ続けるコスト」との交換＝<strong>アイテム交換</strong>になり、獲得が人数比例で増えても経済が壊れない。</p>
+    </div>
+  </section>
+
+  <!-- ============ 07 経済ループ ============ -->
+  <section class="slide">
+    <div class="eyebrow">07<span class="sep">/</span>ねらい</div>
+    <h2>マイルームと市場をつなぐ循環</h2>
+    <p class="lede">3つの新要素は、それぞれが既存コンテンツへの需要を作るように配置している。</p>
+
+    <div class="loop">
+      <div class="lnode">
+        <div class="ic">🪑</div>
+        <h3>家具を集めて配置</h3>
+        <p>マイルーム・家具素材への需要</p>
+      </div>
+      <div class="lnode">
+        <div class="ic">📮</div>
+        <h3>フィギュアが届く</h3>
+        <p>編成が増え探索が伸びる</p>
+      </div>
+      <div class="lnode">
+        <div class="ic">🍀</div>
+        <h3>ラッキーアイテムを仕入れる</h3>
+        <p>対象アイテムへの継続需要（料理に限らない）</p>
+      </div>
+      <div class="lnode">
+        <div class="ic">💠</div>
+        <h3>レア素材を持ち帰る</h3>
+        <p>装備製作・調合の材料に</p>
+      </div>
+      <div class="lnode">
+        <div class="ic">⚖️</div>
+        <h3>市場で売買</h3>
+        <p>売上でまた家具と料理を買う</p>
+      </div>
+    </div>
+    <div class="loop-return">↻ 売上が家具・料理の購入に戻り、ループする</div>
+  </section>
+
+  <!-- ============ 08 未決事項 ============ -->
+  <section class="slide">
+    <div class="eyebrow">08<span class="sep">/</span>これから決めること</div>
+    <h2>未決事項と実装メモ</h2>
+
+    <div class="qa">
+      <div class="q">
+        <h3>ラッキーアイテムと「+N回」の値</h3>
+        <p>どのアイテムが誰のラッキーアイテムか。+N回は「コスト相応」— 日々変動する相場でなく、品目ごとの固定テーブルで持つのが安全（相場連動だと安値の日に貢ぐのが最適解化する）。上限は成果ストック（50回）と同スケールが目安。</p>
+      </div>
+      <div class="q">
+        <h3>レアフラグの付け方</h3>
+        <p>ダンジョン共通テーブルのどの品目をレア枠にするか。既存のハズレ素材7種は通常枠スタートが無難。</p>
+      </div>
+      <div class="q">
+        <h3>家具レシピと当選確率</h3>
+        <p>ヒーローごとの家具の組み合わせと、日次抽選の確率。マイルーム実装の家具ラインナップ確定待ち。</p>
+      </div>
+      <div class="q">
+        <h3>新ヒーローの能力・発見率</h3>
+        <p>2体目・3体目のパッシブ（スタミナ軽減・保存上限+など既存枠）と、発見率テーブルの中身。</p>
+      </div>
+    </div>
+
+    <div class="impl">
+      <h3>実装メモ（backend）</h3>
+      <ul>
+        <li>新マスタ3つ: フィギュア発見レシピ / ヒーロー発見率テーブル / ラッキーアイテム（ヒーロー×品目→+N回）。いずれも data migration ＋ fixture 同期が必要</li>
+        <li>DungeonMissReward は「ダンジョン共通テーブル（重み最低100＋レアフラグ）」へ改修。発見率はヒーロー×品目の別マスタ</li>
+        <li>抽選解決（simulate / claim）: 人数別間隔テーブルを単一50分に変更し、1抽選＝編成人数分のドローに。ラッキーの減衰も同じ決定的計算に乗せる</li>
+        <li>PlayerHero にラッキーカラム追加（残り回数・整数）</li>
+        <li>フィギュア郵送の日次バッチは prod cron 登録が1件増える（登録忘れに注意）</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="tail">メグルランド — ヒーロー探検隊 拡張仕様 draft / 2026-08-18</footer>
+</div>
+</body>
+</html>
