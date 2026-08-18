@@ -208,6 +208,47 @@
   .step h3 { font-size: 15.5px; margin-bottom: 6px; }
   .step p { font-size: 13px; color: var(--muted); line-height: 1.8; }
 
+  /* ---- figure shelf ---- */
+  .shelf {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 30px 24px 10px;
+    margin: 34px 0 12px;
+  }
+  .shelf-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 8px;
+    padding: 0 8px;
+  }
+  .fig { text-align: center; padding: 10px 4px 12px; position: relative; }
+  .fig .f { font-size: 36px; line-height: 1.2; }
+  .fig .n { font-size: 12px; font-weight: 700; margin-top: 6px; }
+  .fig.locked .n { color: var(--muted); font-weight: 400; }
+  .fig .sil {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--card-deep);
+    color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700;
+    margin: 2px auto 0;
+    border: 1px dashed var(--line);
+  }
+  .fig .badge {
+    position: absolute; top: 0; right: 6px;
+    background: var(--gold); color: var(--card);
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    border-radius: 999px; padding: 1px 8px;
+  }
+  .plank {
+    height: 10px;
+    background: linear-gradient(180deg, var(--copper) 0%, var(--copper-soft) 160%);
+    opacity: .55;
+    border-radius: 4px;
+    margin: 2px 0 22px;
+  }
+
   /* ---- party diagram ---- */
   .party-wrap { margin: 34px 0 10px; }
   .party-clock {
@@ -379,7 +420,7 @@
     <h1>ヒーロー探検隊<br>拡張仕様</h1>
     <p class="lede">フィギュアの増やし方・編成の伸ばし方・素材の見つけ方。<br>3つの新要素を、ひとつの経済ループとしてつなげる案。</p>
     <div class="title-meta">
-      <div class="chip"><span>1</span>フィギュアはマイルームに届く</div>
+      <div class="chip"><span>1</span>家具で呼んだフィギュアが棚に並ぶ</div>
       <div class="chip"><span>2</span>抽選はヒーローごとに独立</div>
       <div class="chip"><span>3</span>ラッキーがレア素材の入場券</div>
     </div>
@@ -490,16 +531,62 @@
       <div class="step">
         <div class="no">四</div>
         <div class="icon">🗿</div>
-        <h3>マイルームに現れる</h3>
-        <p>受け取り後はマイルームに自動表示。「いつの間にか居る」演出が成立する。</p>
+        <h3>フィギュア棚に並ぶ</h3>
+        <p>受け取ると専用ページ「フィギュア棚」に追加。「いつの間にか増えている」演出が成立する。</p>
       </div>
     </div>
     <p class="footnote">所持済みヒーローは抽選対象から除外（二重付与なし）。レシピを変えることで家具そのものに需要が生まれ、マーケットにも波及する。</p>
   </section>
 
-  <!-- ============ 04 編成 ============ -->
+  <!-- ============ 04 フィギュア棚 ============ -->
   <section class="slide">
-    <div class="eyebrow">04<span class="sep">/</span>編成と獲得量</div>
+    <div class="eyebrow">04<span class="sep">/</span>新規ページ</div>
+    <h2>フィギュア棚 — 集めたヒーローが並ぶ図鑑</h2>
+    <p class="lede">マイルームにはまだフィギュアの居場所がないため、<strong>独立した新規ページ</strong>として「フィギュア棚」を作る。届いたフィギュアはここに並んでいく。</p>
+
+    <div class="shelf">
+      <div class="shelf-row">
+        <div class="fig">
+          <div class="f">🗿</div>
+          <div class="n">ダビデ</div>
+        </div>
+        <div class="fig">
+          <div class="badge">NEW</div>
+          <div class="f">✨</div>
+          <div class="n">新ヒーロー</div>
+        </div>
+        <div class="fig locked"><div class="sil">?</div><div class="n">？？？</div></div>
+        <div class="fig locked"><div class="sil">?</div><div class="n">？？？</div></div>
+      </div>
+      <div class="plank"></div>
+      <div class="shelf-row">
+        <div class="fig locked"><div class="sil">?</div><div class="n">？？？</div></div>
+        <div class="fig locked"><div class="sil">?</div><div class="n">？？？</div></div>
+        <div class="fig locked"><div class="sil">?</div><div class="n">？？？</div></div>
+        <div class="fig locked"><div class="sil">?</div><div class="n">？？？</div></div>
+      </div>
+      <div class="plank"></div>
+    </div>
+
+    <div class="cards3">
+      <div class="pcard">
+        <h3>図鑑として集める</h3>
+        <p>未入手の枠はシルエット表示。全ヒーロー分の枠が最初から見えるので「まだ居る」が伝わり、収集の動機になる。</p>
+      </div>
+      <div class="pcard">
+        <h3>ヒーローの詳細を見る場所</h3>
+        <p>棚のフィギュアをタップすると、能力・発見率テーブル・ラッキーアイテムを確認できる。素材狙いの攻略はここを起点にする。</p>
+      </div>
+      <div class="pcard">
+        <h3>入手のヒント</h3>
+        <p>未入手枠に「ゆかりの家具」を少しだけ見せるかは要検討。全部隠す／1種だけ見せる、で収集難度が変わる。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 編成 ============ -->
+  <section class="slide">
+    <div class="eyebrow">05<span class="sep">/</span>編成と獲得量</div>
     <h2>1回の抽選で、全員がそれぞれ引く</h2>
     <p class="lede">抽選間隔は人数に関わらず<strong>常に50分</strong>。1回の抽選で編成メンバー全員が、自分のテーブルから1回ずつ引き、自分のスタミナを消費する。</p>
 
@@ -537,7 +624,7 @@
 
   <!-- ============ 05 発見率テーブル ============ -->
   <section class="slide">
-    <div class="eyebrow">05<span class="sep">/</span>素材の見つけ方</div>
+    <div class="eyebrow">06<span class="sep">/</span>素材の見つけ方</div>
     <h2>ダンジョンが「出る物」、ヒーローが「見つける率」</h2>
     <p class="lede">素材テーブルは2層。ダンジョン共通テーブルがその場所で出うる物と重みを定め、ヒーローは品目ごとの<strong>発見率</strong>を持つ。</p>
 
@@ -594,7 +681,7 @@
 
   <!-- ============ 06 絶好調 ============ -->
   <section class="slide">
-    <div class="eyebrow">06<span class="sep">/</span>新ステータス</div>
+    <div class="eyebrow">07<span class="sep">/</span>新ステータス</div>
     <h2>ラッキー — 貢ぎ物が、レア素材の入場券</h2>
     <p class="lede">スタミナとは別のゲージ。<strong>そのヒーローのラッキーアイテム</strong>（料理に限らずヒーローごとに設定）を与えたときだけ上がり、抽選のたびに減っていく。増える量はアイテムごとに設定し、<strong>コスト相応</strong>にする。</p>
 
@@ -641,7 +728,7 @@
 
   <!-- ============ 07 経済ループ ============ -->
   <section class="slide">
-    <div class="eyebrow">07<span class="sep">/</span>ねらい</div>
+    <div class="eyebrow">08<span class="sep">/</span>ねらい</div>
     <h2>マイルームと市場をつなぐ循環</h2>
     <p class="lede">3つの新要素は、それぞれが既存コンテンツへの需要を作るように配置している。</p>
 
@@ -677,7 +764,7 @@
 
   <!-- ============ 08 未決事項 ============ -->
   <section class="slide">
-    <div class="eyebrow">08<span class="sep">/</span>これから決めること</div>
+    <div class="eyebrow">09<span class="sep">/</span>これから決めること</div>
     <h2>未決事項と実装メモ</h2>
 
     <div class="qa">
@@ -697,6 +784,10 @@
         <h3>新ヒーローの能力・発見率</h3>
         <p>2体目・3体目のパッシブ（スタミナ軽減・保存上限+など既存枠）と、発見率テーブルの中身。</p>
       </div>
+      <div class="q">
+        <h3>フィギュア棚のヒント表示</h3>
+        <p>未入手枠のシルエットに「ゆかりの家具」をどこまで見せるか（全部隠す／1種だけチラ見せ）。</p>
+      </div>
     </div>
 
     <div class="impl">
@@ -706,6 +797,7 @@
         <li>DungeonMissReward は「ダンジョン共通テーブル（重み最低100＋レアフラグ）」へ改修。発見率はヒーロー×品目の別マスタ</li>
         <li>抽選解決（simulate / claim）: 人数別間隔テーブルを単一50分に変更し、1抽選＝編成人数分のドローに。ラッキーの減衰も同じ決定的計算に乗せる</li>
         <li>PlayerHero にラッキーカラム追加（残り回数・整数）</li>
+        <li>フィギュア棚は独立した新規ページ（フロント）。枠の母集合は HeroMaster (is_active) を流用し、未入手はシルエット表示</li>
         <li>フィギュア郵送の日次バッチは prod cron 登録が1件増える（登録忘れに注意）</li>
       </ul>
     </div>
